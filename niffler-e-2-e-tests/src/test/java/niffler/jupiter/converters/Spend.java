@@ -1,4 +1,4 @@
-package niffler.jupiter;
+package niffler.jupiter.converters;
 
 import org.junit.jupiter.params.converter.ConvertWith;
 
@@ -11,4 +11,5 @@ import java.lang.annotation.Target;
 @Target(ElementType.PARAMETER)
 @ConvertWith(SpendConverter.class)
 public @interface Spend {
+
 }

@@ -5,11 +5,10 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
 
-public interface NifflerSpendService {
+public interface SpendService {
 
-    String nifflerSpendUri = "http://127.0.0.1:8093";
+    String spendUri = "http://127.0.0.1:8093";
 
     @POST("/addSpend")
     Call<SpendJson> addSpend(@Body SpendJson spend);
-
 }

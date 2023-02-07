@@ -1,15 +1,15 @@
-package niffler.jupiter;
+package niffler.jupiter.context;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.PARAMETER)
+@Retention(RetentionPolicy.RUNTIME)
 public @interface User {
 
-    UserType userType() default UserType.COMMON;
+    UserType value() default UserType.COMMON;
 
     enum UserType {
         ADMIN, COMMON

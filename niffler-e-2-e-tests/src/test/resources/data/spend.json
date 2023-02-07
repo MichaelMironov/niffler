@@ -1,8 +1,8 @@
 {
   "spendDate": "2023-01-30",
-  "category": "Рестораны",
-  "currency": "USD",
-  "amount": 500.0,
+  "category": "Бары",
+  "currency": "RUB",
+  "amount": 2000.0,
   "description": "test-api",
   "username": "dima"
 }
