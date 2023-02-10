@@ -1,4 +1,5 @@
 import axios from "axios";
+import {Buffer} from "buffer";
 
 const apiClient = (token) => axios.create({
     baseURL: "http://127.0.0.1:8090",
@@ -10,9 +11,18 @@ const apiClient = (token) => axios.create({
     }
 });
 
-const getData = ({path, onSuccess, onFail}) => {
+const authClient = ({client, secret}) => axios.create({
+    baseURL: "http://auth-server:9000",
+    mode: "cors",
+    headers: {
+        'Content-type': 'application/json',
+        'Authorization': `Basic ${Buffer.from(`${client}:${secret}`).toString('base64')}`,
+    }
+});
+
+const getData = ({path, onSuccess, onFail, params}) => {
     const token = sessionStorage.getItem('id_token');
-    apiClient(token).get(`${path}`)
+    apiClient(token).get(`${path}`, { params })
         .then(res => {
             return res.data;
         })
@@ -34,4 +44,4 @@ const postData = ({path, data, onSuccess, onFail }) => {
         });
 };
 
-export {apiClient, getData, postData};
+export {apiClient, authClient, getData, postData};

@@ -59,17 +59,12 @@ docker run --name niffler-all -p 5432:5432 -e POSTGRES_PASSWORD=secret -v pgdata
 #### 5. Установить одну из программ для визуальной работы с Postgres
 Например, DBeaver или Datagrip. Мы рекоменуем бесплатную PgAdmin 4.
 
-#### 6. Подключиться к БД postgres (user: postgres, pass: secret) из PgAdmin и создать пустые БД микросервисов
+#### 6. Подключиться к БД postgres (host: localhost, port: 5432, user: postgres, pass: secret, database name: postgres) из PgAdmin и создать пустые БД микросервисов
 ```sql
 create database "niffler-userdata" with owner postgres;
 create database "niffler-spend" with owner postgres;
 create database "niffler-currency" with owner postgres;
 create database "niffler-auth" with owner postgres;
-```
-
-
-```posh
-docker run --name niffler-all -p 5433:5432 -e POSTGRES_PASSWORD=secret -v pgdata:/var/lib/postgresql/data -d postgres:15.1
 ```
 
 #### 7. Установить Java версии 17 или новее. Это необходимо, т.к. проект не поддерживает версии <17
@@ -83,7 +78,7 @@ OpenJDK Runtime Environment Homebrew (build 19.0.1)
 Если у вас несколько версий Java одновременно - то хотя бы одна из них должна быть 17+
 Если java не установлена вовсе, то рекомендую установить OpenJDK (например, из https://adoptium.net/en-GB/)
 
-#### 8. Установить пакетый менеджер для сборки fronend npm
+#### 8. Установить пакетый менеджер для сборки front-end npm
 [Инструкция](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm).
 Рекомендованная версия Node.js - 18.13.0 (LTS)
 
@@ -102,10 +97,11 @@ Dmitriis-MacBook-Pro niffler % vi /etc/hosts
 127.0.0.1       auth-server
 ```
 
-#### 10. Запустить фронтенд
+#### 10. Запустить фронтенд (сначала обновить зависимости)
 ```posh
 Dmitriis-MacBook-Pro niffler % cd niffler-frontend
-Dmitriis-MacBook-Pro niffler-auth % npm start
+Dmitriis-MacBook-Pro niffler-frontend % npm i
+Dmitriis-MacBook-Pro niffler-frontend % npm start
 ```
 
 # Запуск Niffler локально:

@@ -4,6 +4,7 @@ package niffler.service.api;
 import com.google.protobuf.Empty;
 import guru.qa.grpc.niffler.grpc.NifflerCurrencyServiceGrpc;
 import io.grpc.StatusRuntimeException;
+import jakarta.annotation.Nonnull;
 import net.devh.boot.grpc.client.inject.GrpcClient;
 import niffler.model.CurrencyJson;
 import org.slf4j.Logger;
@@ -24,7 +25,8 @@ public class GrpcCurrencyClient {
     @GrpcClient("grpcCurrencyClient")
     private NifflerCurrencyServiceGrpc.NifflerCurrencyServiceBlockingStub nifflerCurrencyServiceStub;
 
-    public List<CurrencyJson> getAllCurrencies() {
+    public @Nonnull
+    List<CurrencyJson> getAllCurrencies() {
         try {
             return nifflerCurrencyServiceStub.getAllCurrencies(EMPTY).getAllCurrenciesList()
                     .stream().map(CurrencyJson::fromGrpcMessage)

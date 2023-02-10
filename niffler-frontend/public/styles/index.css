@@ -10,6 +10,7 @@
 @import url("./components/editable-value.css");
 @import url("./components/form.css");
 @import url("./components/form-input.css");
+@import url("./components/loader.css");
 @import url("./components/profile.css");
 @import url("./components/react-calendar.css");
 @import url("./components/select.css");
@@ -99,12 +100,20 @@
     margin: 20px;
 }
 
-.spendings__buttons {
+.spendings__filters {
     display: flex;
     width: 100%;
     align-items: center;
     justify-content: space-between;
-    margin: 20px 20px 20px 10px;
+}
+
+.spendings__buttons{
+    display: flex;
+    width: 100%;
+}
+
+.spendings__buttons button {
+    margin-right: 20px;
 }
 
 .spendings__img {
