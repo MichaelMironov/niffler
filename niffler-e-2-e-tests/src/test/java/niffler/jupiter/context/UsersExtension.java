@@ -5,11 +5,10 @@ import niffler.jupiter.context.User.UserType;
 import niffler.model.UserModel;
 import org.junit.jupiter.api.extension.*;
 
-import java.util.Arrays;
-import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.Queue;
+import java.util.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static niffler.jupiter.context.User.UserType.ADMIN;
 import static niffler.jupiter.context.User.UserType.COMMON;
@@ -24,36 +23,51 @@ public class UsersExtension implements ParameterResolver, BeforeTestExecutionCal
         ADMIN_USERS.add(new UserModel("dima", "12345"));
         ADMIN_USERS.add(new UserModel("mike", "mir"));
         COMMON_USERS.add(new UserModel("test", "12345"));
+        COMMON_USERS.add(new UserModel("test", "12345"));
+        COMMON_USERS.add(new UserModel("test", "12345"));
+        COMMON_USERS.add(new UserModel("test", "12345"));
     }
 
     /**
      * Getting user from USERS_QUEUE with waiting in while cycle until he wasn't null
      */
     @Override
-    public void beforeTestExecution(final ExtensionContext context) throws Exception {
+    public void beforeTestExecution(ExtensionContext context) throws Exception {
         String id = getId(context);
-        UserModel user = null;
-        final UserType desiredUserType = Arrays.stream(context.getRequiredTestMethod().getParameters())
+        List<UserModel> users = new ArrayList<>();
+        List<UserType> userTypes = Arrays.stream(context.getRequiredTestMethod().getParameters())
                 .filter(p -> p.isAnnotationPresent(User.class))
                 .map(p -> p.getAnnotation(User.class))
-                .findFirst()
-                .orElseThrow(() -> new NoSuchElementException("Required user not found in current context"))
-                .value();
+                .map(User::value).toList();
 
-        while (user == null) {
-            user = desiredUserType == ADMIN ? ADMIN_USERS.poll() : COMMON_USERS.poll();
+        int length = context.getRequiredTestMethod().getParameters().length;
+        List<Map<UserType, UserModel>> maps = new ArrayList<>();
+
+        while (users.size() < length) {
+            for (int i = 0; i < length; i++) {
+                users.add(userTypes.get(i) == ADMIN ? ADMIN_USERS.poll() : COMMON_USERS.poll());
+                maps.add(Map.of(userTypes.get(i), users.get(i)));
+            }
         }
-        context.getStore(NAMESPACE).put(id, Map.of(desiredUserType, user));
+        context.getStore(NAMESPACE).put(id, maps);
+
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public void afterTestExecution(final ExtensionContext context) throws Exception {
         String id = getId(context);
-        final Map<UserType, UserModel> userModel = context.getStore(NAMESPACE).get(id, Map.class);
-//        userModel.forEach((userType, userModel1) -> );
-        if (userModel.containsKey(ADMIN)) ADMIN_USERS.add(userModel.get(ADMIN));
-        else COMMON_USERS.add(userModel.get(COMMON));
+
+        List<Map<UserType, UserModel>> users = context.getStore(NAMESPACE).get(id, List.class);
+
+        final Set<Map.Entry<UserType, UserModel>> collect = users.stream().map(Map::entrySet)
+                .map(entries -> entries.stream().iterator().next()).collect(Collectors.toSet());
+
+        if (collect.iterator().next().getKey() == ADMIN) {
+            ADMIN_USERS.add(collect.iterator().next().getValue());
+        } else {
+            COMMON_USERS.add(collect.iterator().next().getValue());
+        }
     }
 
     @Override
@@ -63,10 +77,17 @@ public class UsersExtension implements ParameterResolver, BeforeTestExecutionCal
     }
 
     @Override
-    public UserModel resolveParameter(final ParameterContext parameterContext, final ExtensionContext extensionContext) throws ParameterResolutionException {
+    @SuppressWarnings("unchecked")
+    public UserModel resolveParameter(ParameterContext parameterContext, ExtensionContext extensionContext) throws ParameterResolutionException {
         String id = getId(extensionContext);
-        return (UserModel) extensionContext.getStore(NAMESPACE).get(id, Map.class)
-                .values().stream().findFirst().orElseThrow();
+
+        List<Map<UserType, UserModel>> users = extensionContext.getStore(NAMESPACE).get(id, List.class);
+
+        UserType userType = parameterContext.getParameter().getAnnotation(User.class).value();
+
+        return users.stream().map(Map::entrySet).filter(entries -> entries.stream().iterator().next().getKey() == userType)
+                .map(entries -> entries.iterator().next().getValue()).findFirst().orElseThrow();
+
     }
 
     /**

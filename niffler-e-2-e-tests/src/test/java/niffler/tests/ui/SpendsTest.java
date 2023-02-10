@@ -1,32 +1,27 @@
 package niffler.tests.ui;
 
-import niffler.database.dao.SpendsDao;
-import niffler.database.entity.Spends;
-import niffler.jupiter.di.Inject;
-import niffler.jupiter.di.Injector;
+import niffler.database.entity.Currency;
+import niffler.database.entity.Spend;
+import niffler.jupiter.di.SpendInjector;
+import niffler.jupiter.di.WithSpend;
 import niffler.tests.ui.steps.CheckSteps;
 import niffler.tests.ui.steps.LoginSteps;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
-@Injector
+@ExtendWith(SpendInjector.class)
 class SpendsTest extends BaseTest {
 
-    @Inject(amount = 5000.0, currency = "RUB", category = "Бары", description = "Тест добавления затрат")
-    Spends spends;
+    @WithSpend(amount = 5000.0, currency = Currency.RUB, category = "Бары", description = "Тест добавления затрат")
+    Spend spend;
 
     @Test
     void test() {
 
         CheckSteps.findAllSpends();
         LoginSteps.login();
-        CheckSteps.checkSpends(spends.getSpendDate(), "5000", "RUB", "Бары", "Тест добавления затрат");
-    }
 
-    @AfterEach
-    void after() {
-        Assertions.assertTrue(SpendsDao.getInstance().clear());
-        CheckSteps.findAllSpends();
+        new CheckSteps().checkSpends(spend);
+
     }
 }

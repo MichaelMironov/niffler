@@ -6,26 +6,17 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.UUID;
 
-public class Spends {
+public class Spend {
     private UUID id;
     private String username;
     private Date spendDate;
-    private String currency;
+    private Currency currency;
     private Double amount;
     private String description;
     private UUID categoryId;
+    private String categoryName;
 
-    public Spends(UUID id, String username, Date spendDate, String currency, Double amount, String description, UUID categoryId) {
-        this.id = id;
-        this.username = username;
-        this.spendDate = spendDate;
-        this.currency = currency;
-        this.amount = amount;
-        this.description = description;
-        this.categoryId = categoryId;
-    }
-
-    public Spends() {
+    public Spend() {
     }
 
     public void setId(UUID id) {
@@ -40,7 +31,7 @@ public class Spends {
         this.spendDate = spendDate;
     }
 
-    public void setCurrency(String currency) {
+    public void setCurrency(Currency currency) {
         this.currency = currency;
     }
 
@@ -64,21 +55,29 @@ public class Spends {
         return username;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
     public String getSpendDate() {
         SimpleDateFormat format = new SimpleDateFormat("dd MMM yy", new Locale("en"));
         return format.format(spendDate);
     }
 
     public String getCurrency() {
-        return currency;
+        return currency.toString();
     }
 
     public Double getAmount() {
         return amount;
-    }
-
-    public String getDescriprion() {
-        return description;
     }
 
     public UUID getCategoryId() {
@@ -90,7 +89,7 @@ public class Spends {
     public boolean equals(Object obj) {
         if (obj == this) return true;
         if (obj == null || obj.getClass() != this.getClass()) return false;
-        var that = (Spends) obj;
+        var that = (Spend) obj;
         return Objects.equals(this.id, that.id) &&
                 Objects.equals(this.username, that.username) &&
                 Objects.equals(this.spendDate, that.spendDate) &&
@@ -117,4 +116,56 @@ public class Spends {
                 "categoryId=" + categoryId + ']';
     }
 
+    public static class Builder {
+
+        private final Spend spend;
+
+        public Builder() {
+            spend = new Spend();
+        }
+
+        public Builder setId(UUID uuid){
+            spend.id = uuid;
+            return this;
+        }
+
+        public Builder setUsername(String username) {
+            spend.username = username;
+            return this;
+        }
+
+        public Builder setDate(Date spendDate) {
+            spend.spendDate = spendDate;
+            return this;
+        }
+
+        public Builder setCurrency(Currency currency) {
+            spend.currency = currency;
+            return this;
+        }
+
+        public Builder setAmount(Double amount) {
+            spend.amount = amount;
+            return this;
+        }
+
+        public Builder setDescription(String description) {
+            spend.description = description;
+            return this;
+        }
+
+        public Builder setCategoryId(UUID categoryId) {
+            spend.categoryId = categoryId;
+            return this;
+        }
+
+        public Builder setCategoryName(String categoryName) {
+            spend.categoryName = categoryName;
+            return this;
+        }
+
+        public Spend build() {
+            return spend;
+        }
+    }
 }

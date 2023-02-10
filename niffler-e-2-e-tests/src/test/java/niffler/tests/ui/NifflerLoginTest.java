@@ -37,14 +37,16 @@ class NifflerLoginTest extends BaseTest {
 
     @AllureId("2")
     @Test
-    void test_2(@User(ADMIN) UserModel userModel) {
-        log.info("Test_2. " + userModel.toString());
-        System.out.println("Test_2. " + userModel);
+    void test_2(@User(COMMON) UserModel first, @User(ADMIN) UserModel second) {
+        log.info("Test_2. " + first.toString());
+        log.info("Test_2. " + second.toString());
+        System.out.println("Test_2. " + first);
+        System.out.println("Test_2. " + second);
         step("Check login", () -> {
             open(PROPS.authUrl());
             $("a[href*='redirect']").click();
-            $("input[name='username']").setValue(PROPS.login());
-            $("input[name='password']").setValue(PROPS.password());
+            $("input[name='username']").setValue(second.getUsername());
+            $("input[name='password']").setValue(second.getPassword());
             $("button[type='submit']").click();
             $(".header__title").shouldBe(Condition.visible)
                     .shouldHave(Condition.text("Niffler. The coin keeper."));

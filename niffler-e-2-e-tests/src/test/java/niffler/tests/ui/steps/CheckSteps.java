@@ -1,7 +1,7 @@
 package niffler.tests.ui.steps;
 
 import niffler.database.dao.SpendsDao;
-import niffler.database.entity.Spends;
+import niffler.database.entity.Spend;
 
 import java.util.List;
 
@@ -10,13 +10,13 @@ import static com.codeborne.selenide.Selenide.$$x;
 
 public class CheckSteps {
 
-    public static void checkSpends(String spendDate, String amount, String currency, String category, String description){
+    public void checkSpends(Spend spend){
         $$x("//table[@class='table spendings-table']//td")
-                .shouldHave(textsInAnyOrder(spendDate, amount, currency, category, description));
+                .shouldHave(textsInAnyOrder(spend.getSpendDate(), String.valueOf(spend.getAmount().intValue()), spend.getCurrency(), spend.getCategoryName(), spend.getDescription()));
     }
     public static void findAllSpends() {
         System.out.print("Записи в бд: ");
-        final List<Spends> spends = SpendsDao.getInstance().findAll();
+        final List<Spend> spends = SpendsDao.getInstance().findAll();
         spends.forEach(System.out::println);
     }
 }
