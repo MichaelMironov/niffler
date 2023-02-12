@@ -1,6 +1,6 @@
 package niffler.tests.ui;
 
-import niffler.jupiter.BeforeSuiteExtension;
+import niffler.jupiter.fixture.BeforeSuiteExtension;
 import niffler.utils.PropertiesUtil;
 import org.aeonbits.owner.ConfigFactory;
 import org.junit.jupiter.api.extension.ExtendWith;

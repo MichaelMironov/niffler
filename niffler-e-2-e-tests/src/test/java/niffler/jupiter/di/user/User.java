@@ -1,4 +1,4 @@
-package niffler.jupiter.context;
+package niffler.jupiter.di.user;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

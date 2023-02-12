@@ -1,4 +1,4 @@
-package niffler.jupiter.di;
+package niffler.jupiter.di.spend;
 
 import lombok.SneakyThrows;
 import niffler.database.dao.CategoriesDao;

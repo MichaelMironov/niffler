@@ -2,8 +2,8 @@ package niffler.tests.ui;
 
 import niffler.database.entity.Currency;
 import niffler.database.entity.Spend;
-import niffler.jupiter.di.SpendInjector;
-import niffler.jupiter.di.WithSpend;
+import niffler.jupiter.di.spend.SpendInjector;
+import niffler.jupiter.di.spend.WithSpend;
 import niffler.tests.ui.steps.CheckSteps;
 import niffler.tests.ui.steps.LoginSteps;
 import org.junit.jupiter.api.Test;

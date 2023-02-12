@@ -1,4 +1,4 @@
-package niffler.jupiter.di;
+package niffler.jupiter.di.spend;
 
 import niffler.database.entity.Currency;
 import org.junit.jupiter.api.extension.ExtendWith;
