@@ -1,13 +1,13 @@
-package niffler.api;
+package niffler.api.spend;
 
-import niffler.model.SpendJson;
+import niffler.data.json.SpendJson;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
 
 public interface SpendService {
 
-    String spendUri = "http://127.0.0.1:8093";
+    String baseUrl = "http://127.0.0.1:8093";
 
     @POST("/addSpend")
     Call<SpendJson> addSpend(@Body SpendJson spend);

@@ -3,9 +3,9 @@ package niffler.jupiter.di.spend;
 import lombok.SneakyThrows;
 import niffler.database.dao.CategoriesDao;
 import niffler.database.dao.SpendsDao;
-import niffler.database.entity.Categories;
-import niffler.database.entity.Currency;
-import niffler.database.entity.Spend;
+import niffler.data.entity.Categories;
+import niffler.data.entity.Spend;
+import niffler.data.enums.CurrencyValues;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.TestInstancePostProcessor;
@@ -28,22 +28,19 @@ public class SpendInjector implements TestInstancePostProcessor {
     @SneakyThrows
     private void createInstance(Object testInstance, Field field) {
 
-        final double amount = field.getAnnotation(WithSpend.class).amount();
-        final Currency currency = field.getAnnotation(WithSpend.class).currency();
-        final String category = field.getAnnotation(WithSpend.class).category();
-        final String description = field.getAnnotation(WithSpend.class).description();
+        final WithSpend annotation = field.getAnnotation(WithSpend.class);
 
         Spend spend = new Spend.Builder()
                 .setUsername("mike")
-                .setCurrency(currency)
-                .setAmount(amount)
-                .setDescription(description)
-                .setCategoryId(getUUIDbyDescription(category))
+                .setCurrency(annotation.currency())
+                .setAmount(annotation.amount())
+                .setDescription(annotation.description())
+                .setCategoryId(getUUIDbyDescription(annotation.category()))
                 .build();
 
         try {
             final Spend created = SpendsDao.getInstance().create(spend);
-            created.setCategoryName(category);
+            created.setCategoryName(annotation.category());
             field.set(testInstance, created);
         } catch (IllegalAccessException e) {
             throw new RuntimeException("Не удалось создать тестовые данные");

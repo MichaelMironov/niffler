@@ -1,16 +1,20 @@
-package niffler.model;
+package niffler.data.json;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.jackson.Jacksonized;
+import niffler.data.enums.CurrencyValues;
 
 import java.util.Date;
+import java.util.UUID;
 
 @Data
 @Jacksonized
 @NoArgsConstructor
 public class SpendJson {
+    @JsonProperty("id")
+    private UUID id;
     @JsonProperty("spendDate")
     private Date spendDate;
     @JsonProperty("category")
