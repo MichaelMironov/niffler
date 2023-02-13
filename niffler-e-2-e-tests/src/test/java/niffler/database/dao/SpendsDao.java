@@ -1,7 +1,7 @@
 package niffler.database.dao;
 
-import niffler.database.entity.Currency;
-import niffler.database.entity.Spend;
+import niffler.data.entity.Spend;
+import niffler.data.enums.CurrencyValues;
 import niffler.utils.ConnectionManager;
 
 import java.sql.*;
@@ -87,7 +87,7 @@ public class SpendsDao implements Dao<UUID, Spend> {
                 .setId((UUID) resultSet.getObject("id"))
                 .setUsername(resultSet.getString("username"))
                 .setDate(resultSet.getDate("spend_date"))
-                .setCurrency(Currency.valueOf(resultSet.getString("currency")))
+                .setCurrency(CurrencyValues.valueOf(resultSet.getString("currency")))
                 .setAmount(resultSet.getDouble("amount"))
                 .setDescription(resultSet.getString("description"))
                 .setCategoryId((UUID) resultSet.getObject("category_id"))
