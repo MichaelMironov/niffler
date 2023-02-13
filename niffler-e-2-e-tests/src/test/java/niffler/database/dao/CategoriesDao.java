@@ -1,6 +1,6 @@
 package niffler.database.dao;
 
-import niffler.database.entity.Categories;
+import niffler.data.entity.Categories;
 import niffler.utils.ConnectionManager;
 
 import java.sql.Connection;

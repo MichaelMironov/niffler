@@ -1,6 +1,7 @@
 package niffler.database.dao;
 
-import niffler.database.entity.Spends;
+import niffler.data.entity.Spend;
+import niffler.data.enums.CurrencyValues;
 import niffler.utils.ConnectionManager;
 
 import java.sql.*;
@@ -9,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class SpendsDao implements Dao<UUID, Spends> {
+public class SpendsDao implements Dao<UUID, Spend> {
 
     private static final String FIND_ALL = "SELECT * FROM public.spends;";
     private static final String ADD_SPEND = """
@@ -27,11 +28,11 @@ public class SpendsDao implements Dao<UUID, Spends> {
     }
 
     @Override
-    public List<Spends> findAll() {
+    public List<Spend> findAll() {
         try (Connection connection = ConnectionManager.get();
              final PreparedStatement preparedStatement = connection.prepareStatement(FIND_ALL)) {
             final ResultSet resultSet = preparedStatement.executeQuery();
-            List<Spends> spends = new ArrayList<>();
+            List<Spend> spends = new ArrayList<>();
             while (resultSet.next()) {
                 spends.add(getSpends(resultSet));
             }
@@ -42,23 +43,19 @@ public class SpendsDao implements Dao<UUID, Spends> {
     }
 
     @Override
-    public Spends create(Spends spend) {
+    public Spend create(Spend spend) {
         try (Connection connection = ConnectionManager.get();
              final PreparedStatement preparedStatement = connection.prepareStatement(ADD_SPEND)) {
             preparedStatement.setString(1, spend.getUsername());
             preparedStatement.setDate(2, Date.valueOf(LocalDate.now()));
-            preparedStatement.setString(3, spend.getCurrency());
+            preparedStatement.setString(3, spend.getCurrency().toString());
             preparedStatement.setDouble(4, spend.getAmount());
-            preparedStatement.setString(5, spend.getDescriprion());
+            preparedStatement.setString(5, spend.getDescription());
             preparedStatement.setObject(6, spend.getCategoryId());
             final ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()){
-               spend = getSpends(resultSet);
+            if (resultSet.next()) {
+                spend = getSpends(resultSet);
             }
-            //TODO: don't work with uuid
-//            final ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
-//            if(generatedKeys.next())
-//                spend.setId(UUID.fromString(generatedKeys.getString("id")));
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -85,15 +82,15 @@ public class SpendsDao implements Dao<UUID, Spends> {
         }
     }
 
-    private Spends getSpends(ResultSet resultSet) throws SQLException {
-        return new Spends(
-                (UUID) resultSet.getObject("id"),
-                resultSet.getString("username"),
-                resultSet.getDate("spend_date"),
-                resultSet.getString("currency"),
-                resultSet.getDouble("amount"),
-                resultSet.getString("description"),
-                (UUID) resultSet.getObject("category_id")
-        );
+    private Spend getSpends(ResultSet resultSet) throws SQLException {
+        return new Spend.Builder()
+                .setId((UUID) resultSet.getObject("id"))
+                .setUsername(resultSet.getString("username"))
+                .setDate(resultSet.getDate("spend_date"))
+                .setCurrency(CurrencyValues.valueOf(resultSet.getString("currency")))
+                .setAmount(resultSet.getDouble("amount"))
+                .setDescription(resultSet.getString("description"))
+                .setCategoryId((UUID) resultSet.getObject("category_id"))
+                .build();
     }
 }

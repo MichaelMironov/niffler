@@ -1,0 +1,24 @@
+server:
+  port: 8089
+  error:
+    include:
+      message: true
+
+spring:
+  datasource:
+    url: 'jdbc:postgresql://localhost:5432/niffler-userdata'
+    username: postgres
+    password: secret
+    driver-class-name: org.postgresql.Driver
+    jpa:
+      properties.hibernate:
+        show_sql: true
+        format_sql: true
+        hbbm2ddl.auto: valate
+logging:
+  level:
+    root: INFO
+    org.springframework.web: DEBUG
+    org.springframework.security: DEBUG
+    org.springframework.security.oauth2: DEBUG
+#    org.springframework.boot.autoconfigure: DEBUG
