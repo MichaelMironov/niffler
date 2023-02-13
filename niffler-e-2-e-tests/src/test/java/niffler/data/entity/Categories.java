@@ -1,4 +1,4 @@
-package niffler.database.entity;
+package niffler.data.entity;
 
 import java.util.UUID;
 

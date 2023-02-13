@@ -1,7 +1,7 @@
 package niffler.tests.ui.steps;
 
 import niffler.database.dao.SpendsDao;
-import niffler.database.entity.Spend;
+import niffler.data.entity.Spend;
 
 import java.util.List;
 

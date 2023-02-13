@@ -1,4 +1,6 @@
-package niffler.database.entity;
+package niffler.data.entity;
+
+import niffler.data.enums.CurrencyValues;
 
 import java.sql.Date;
 import java.text.SimpleDateFormat;
@@ -10,7 +12,7 @@ public class Spend {
     private UUID id;
     private String username;
     private Date spendDate;
-    private Currency currency;
+    private CurrencyValues currency;
     private Double amount;
     private String description;
     private UUID categoryId;
@@ -31,7 +33,7 @@ public class Spend {
         this.spendDate = spendDate;
     }
 
-    public void setCurrency(Currency currency) {
+    public void setCurrency(CurrencyValues currency) {
         this.currency = currency;
     }
 
@@ -139,7 +141,7 @@ public class Spend {
             return this;
         }
 
-        public Builder setCurrency(Currency currency) {
+        public Builder setCurrency(CurrencyValues currency) {
             spend.currency = currency;
             return this;
         }
