@@ -2,10 +2,9 @@ package niffler.tests.ui;
 
 import com.codeborne.selenide.Condition;
 import io.qameta.allure.AllureId;
-import lombok.extern.slf4j.Slf4j;
+import niffler.data.model.UserModel;
 import niffler.jupiter.di.user.User;
 import niffler.jupiter.di.user.UsersSupplier;
-import niffler.data.model.UserModel;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -15,7 +14,6 @@ import static io.qameta.allure.Allure.step;
 import static niffler.jupiter.di.user.User.UserType.ADMIN;
 import static niffler.jupiter.di.user.User.UserType.COMMON;
 
-@Slf4j
 @ExtendWith(UsersSupplier.class)
 class NifflerLoginTest extends BaseTest {
 

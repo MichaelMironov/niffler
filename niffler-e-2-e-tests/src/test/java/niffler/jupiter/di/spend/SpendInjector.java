@@ -1,11 +1,10 @@
 package niffler.jupiter.di.spend;
 
 import lombok.SneakyThrows;
-import niffler.database.dao.CategoriesDao;
-import niffler.database.dao.SpendsDao;
 import niffler.data.entity.Categories;
 import niffler.data.entity.Spend;
-import niffler.data.enums.CurrencyValues;
+import niffler.database.dao.CategoriesDao;
+import niffler.database.dao.SpendsDao;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.TestInstancePostProcessor;

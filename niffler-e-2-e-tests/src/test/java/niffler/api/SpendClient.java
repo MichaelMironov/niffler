@@ -1,6 +1,7 @@
 package niffler.api;
 
-import niffler.model.SpendJson;
+import niffler.api.spend.SpendService;
+import niffler.data.json.SpendJson;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -16,7 +17,7 @@ public class SpendClient {
             .addInterceptor(new HttpLoggingInterceptor().setLevel(BODY)).build();
 
     private final Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl(SpendService.spendUri)
+            .baseUrl(SpendService.baseUrl)
             .addConverterFactory(JacksonConverterFactory.create())
             .build();
 
