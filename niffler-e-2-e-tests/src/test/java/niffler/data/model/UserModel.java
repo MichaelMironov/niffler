@@ -1,4 +1,6 @@
-package niffler.model;
+package niffler.data.model;
+
+import java.util.Objects;
 
 public class UserModel {
 
@@ -32,5 +34,18 @@ public class UserModel {
                 "username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserModel userModel = (UserModel) o;
+        return username.equals(userModel.username) && password.equals(userModel.password);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(username, password);
     }
 }
