@@ -16,21 +16,24 @@ allure {
 }
 
 dependencies {
-    implementation 'org.aeonbits.owner:owner:1.0.4',
-            'org.postgresql:postgresql:42.5.1'
 
     testImplementation 'com.codeborne:selenide:6.11.1',
+            'org.aeonbits.owner:owner:1.0.4',
+            'org.postgresql:postgresql:42.5.1',
             'org.junit.jupiter:junit-jupiter:5.9.2',
             'com.squareup.retrofit2:retrofit:2.9.0',
             'com.squareup.retrofit2:converter-jackson:2.9.0',
-            'com.squareup.okhttp3:logging-interceptor:3.9.0'
+            'com.squareup.okhttp3:logging-interceptor:3.9.0',
+            'org.springframework:spring-jdbc:6.0.4',
+            'org.hibernate:hibernate-core:6.1.7.Final'
+
+    testCompileOnly 'org.projectlombok:lombok:1.18.20'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.20'
 
     implementation("io.qameta.allure:allure-junit5:2.20.1") {
         exclude group: "org.junit.platform"
         exclude group: "org.junit.jupiter"
     }
-    testCompileOnly 'org.projectlombok:lombok:1.18.20'
-    testAnnotationProcessor 'org.projectlombok:lombok:1.18.20'
 
 }
 
