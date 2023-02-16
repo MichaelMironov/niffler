@@ -1,6 +1,6 @@
 package niffler.tests.ui.steps;
 
-import niffler.database.dao.SpendsDao;
+import niffler.database.dao.SpendsRepository;
 import niffler.data.entity.Spend;
 
 import java.util.List;
@@ -16,7 +16,7 @@ public class CheckSteps {
     }
     public static void findAllSpends() {
         System.out.print("Записи в бд: ");
-        final List<Spend> spends = SpendsDao.getInstance().findAll();
+        final List<Spend> spends = SpendsRepository.getInstance().findAll();
         spends.forEach(System.out::println);
     }
 }

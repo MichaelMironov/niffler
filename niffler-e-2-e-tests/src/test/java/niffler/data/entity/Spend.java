@@ -1,6 +1,7 @@
 package niffler.data.entity;
 
 import niffler.data.enums.CurrencyValues;
+import niffler.database.entity.BaseEntity;
 
 import java.sql.Date;
 import java.text.SimpleDateFormat;
@@ -8,7 +9,7 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.UUID;
 
-public class Spend {
+public class Spend implements BaseEntity<UUID> {
     private UUID id;
     private String username;
     private Date spendDate;

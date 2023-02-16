@@ -5,12 +5,11 @@ import niffler.data.enums.CurrencyValues;
 import niffler.utils.ConnectionManager;
 
 import java.sql.*;
+import java.sql.Date;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
-public class SpendsDao implements Dao<UUID, Spend> {
+public class SpendsRepository implements Repository<UUID, Spend> {
 
     private static final String FIND_ALL = "SELECT * FROM public.spends;";
     private static final String ADD_SPEND = """
@@ -18,13 +17,13 @@ public class SpendsDao implements Dao<UUID, Spend> {
             VALUES (?, ?, ?, ?, ?, ?) RETURNING *;""";
     private static final String DELETE_ALL = "DELETE FROM spends WHERE amount > 0;";
 
-    private static final SpendsDao INSTANCE = new SpendsDao();
+    private static final SpendsRepository INSTANCE = new SpendsRepository();
 
-    public static SpendsDao getInstance() {
+    public static SpendsRepository getInstance() {
         return INSTANCE;
     }
 
-    private SpendsDao() {
+    private SpendsRepository() {
     }
 
     @Override
@@ -43,7 +42,7 @@ public class SpendsDao implements Dao<UUID, Spend> {
     }
 
     @Override
-    public Spend create(Spend spend) {
+    public Spend save(Spend spend) {
         try (Connection connection = ConnectionManager.get();
              final PreparedStatement preparedStatement = connection.prepareStatement(ADD_SPEND)) {
             preparedStatement.setString(1, spend.getUsername());
@@ -63,14 +62,29 @@ public class SpendsDao implements Dao<UUID, Spend> {
     }
 
     @Override
-    public boolean delete(UUID uuid) {
+    public void delete(UUID uuid) {
         //TODO: add deleting by uuid
         try (Connection connection = ConnectionManager.get();
              final PreparedStatement preparedStatement = connection.prepareStatement(DELETE_ALL)) {
-            return preparedStatement.executeUpdate() > 0;
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public void update(Spend entity) {
+
+    }
+
+    @Override
+    public Optional<Spend> findById(UUID id) {
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<Spend> findById(UUID uuid, Map<String, Object> properties) {
+        return Optional.empty();
     }
 
     public boolean clear() {

@@ -7,28 +7,41 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
-public class CategoriesDao implements Dao<UUID, Categories> {
+public class CategoriesRepository implements Repository<UUID, Categories> {
 
     private static final String FIND_ALL = "SELECT * FROM categories;";
 
-    private static final CategoriesDao categoriesDao = new CategoriesDao();
+    private static final CategoriesRepository categoriesDao = new CategoriesRepository();
 
-    private CategoriesDao() {
+    private CategoriesRepository() {
     }
 
 
     @Override
-    public Categories create(Categories spend) {
+    public Categories save(Categories spend) {
         return null;
     }
 
     @Override
-    public boolean delete(UUID uuid) {
-        return false;
+    public void delete(UUID uuid) {
+
+    }
+
+    @Override
+    public void update(Categories entity) {
+
+    }
+
+    @Override
+    public Optional<Categories> findById(UUID id) {
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<Categories> findById(UUID uuid, Map<String, Object> properties) {
+        return Optional.empty();
     }
 
     @Override
@@ -53,7 +66,7 @@ public class CategoriesDao implements Dao<UUID, Categories> {
         );
     }
 
-    public static CategoriesDao getInstance() {
+    public static CategoriesRepository getInstance() {
         return categoriesDao;
     }
 }

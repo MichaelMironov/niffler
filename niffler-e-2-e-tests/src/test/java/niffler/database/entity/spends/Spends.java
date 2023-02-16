@@ -1,4 +1,4 @@
-package niffler.database.entity;
+package niffler.database.entity.spends;
 
 import java.sql.Date;
 import java.text.SimpleDateFormat;

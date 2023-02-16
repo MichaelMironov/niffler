@@ -1,8 +1,10 @@
 package niffler.data.entity;
 
+import niffler.database.entity.BaseEntity;
+
 import java.util.UUID;
 
-public class Categories {
+public class Categories implements BaseEntity<UUID> {
     private UUID id;
     private String description;
 

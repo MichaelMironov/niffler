@@ -1,4 +1,4 @@
-package niffler.database.entity;
+package niffler.database.entity.categories;
 
 import java.util.UUID;
 

@@ -1,7 +1,7 @@
 package niffler.jupiter.fixture;
 
 import com.codeborne.selenide.Configuration;
-import niffler.database.dao.SpendsDao;
+import niffler.database.dao.SpendsRepository;
 import niffler.tests.ui.steps.CheckSteps;
 import org.junit.jupiter.api.extension.ExtensionContext;
 
@@ -14,7 +14,7 @@ public class BeforeSuiteExtension implements AroundAllTestsExtension {
 
     @Override
     public void afterAllTests() {
-        SpendsDao.getInstance().clear();
+        SpendsRepository.getInstance().clear();
         CheckSteps.findAllSpends();
         System.out.println("AFTER SUITE!");
     }

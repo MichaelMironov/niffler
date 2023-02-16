@@ -3,8 +3,8 @@ package niffler.jupiter.di.spend;
 import lombok.SneakyThrows;
 import niffler.data.entity.Categories;
 import niffler.data.entity.Spend;
-import niffler.database.dao.CategoriesDao;
-import niffler.database.dao.SpendsDao;
+import niffler.database.dao.CategoriesRepository;
+import niffler.database.dao.SpendsRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.TestInstancePostProcessor;
@@ -38,7 +38,7 @@ public class SpendInjector implements TestInstancePostProcessor {
                 .build();
 
         try {
-            final Spend created = SpendsDao.getInstance().create(spend);
+            final Spend created = SpendsRepository.getInstance().save(spend);
             created.setCategoryName(annotation.category());
             field.set(testInstance, created);
         } catch (IllegalAccessException e) {
@@ -49,7 +49,7 @@ public class SpendInjector implements TestInstancePostProcessor {
     private UUID getUUIDbyDescription(String description) {
         Categories categories = new Categories();
         categories.setDescription(description);
-        final Optional<Categories> expectedCategory = CategoriesDao.getInstance().findAll()
+        final Optional<Categories> expectedCategory = CategoriesRepository.getInstance().findAll()
                 .stream().filter(category -> category.getDescription().equals(categories.getDescription()))
                 .findFirst();
         return expectedCategory.isPresent() ? expectedCategory.get().getId() : Assertions.fail("Не найден UUID по указанному описанию");
