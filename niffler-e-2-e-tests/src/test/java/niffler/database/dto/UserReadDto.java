@@ -7,7 +7,5 @@ import java.util.UUID;
 
 public record UserReadDto(UUID id,
                           Credentials credentials,
-                          AccountStatus accountStatus,
-                          AuthoritiesReadDto authorities) {
-
+                          AccountStatus accountStatus) {
 }

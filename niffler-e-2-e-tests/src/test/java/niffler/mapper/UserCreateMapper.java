@@ -1,8 +1,10 @@
 package niffler.mapper;
 
+import lombok.RequiredArgsConstructor;
 import niffler.database.dto.UserCreateDto;
 import niffler.database.entity.user.User;
 
+@RequiredArgsConstructor
 public class UserCreateMapper implements Mapper<UserCreateDto, User> {
 
     @Override

@@ -10,6 +10,11 @@ import niffler.database.entity.user.User;
 
 import java.util.UUID;
 
+@NamedEntityGraph(
+        name = "WithUser",
+        attributeNodes = {@NamedAttributeNode("user")}
+)
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,9 +23,9 @@ import java.util.UUID;
 @PrimaryKeyJoinColumn(name = "user_id")
 public class Authorities implements BaseEntity<UUID> {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private UUID id;
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private User user;
     @Enumerated(EnumType.STRING)
     private Authority authority;
