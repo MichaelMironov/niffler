@@ -22,7 +22,7 @@ import java.util.UUID;
 @Inheritance(strategy = InheritanceType.JOINED)
 public class User implements BaseEntity<UUID> {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
     private Credentials credentials;
     private AccountStatus accountStatus;

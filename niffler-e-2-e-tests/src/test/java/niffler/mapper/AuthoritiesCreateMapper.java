@@ -13,9 +13,9 @@ public class AuthoritiesCreateMapper implements Mapper<AuthoritiesCreateDto, Aut
     @Override
     public Authorities mapFrom(AuthoritiesCreateDto object) {
         return Authorities.builder()
-                .authority(object.authority())
                 .id(object.user().getId())
                 .user(object.user())
+                .authority(object.authority())
                 .build();
     }
 }

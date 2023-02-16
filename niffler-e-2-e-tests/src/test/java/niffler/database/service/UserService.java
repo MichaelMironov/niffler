@@ -23,9 +23,9 @@ public class UserService {
     private final UserCreateMapper userCreateMapper;
 
     @Transactional
-    public UUID create(UserCreateDto userDto) {
+    public User create(UserCreateDto userDto) {
         final User user = userCreateMapper.mapFrom(userDto);
-        return userRepository.save(user).getId();
+        return userRepository.save(user);
     }
 
     @Transactional

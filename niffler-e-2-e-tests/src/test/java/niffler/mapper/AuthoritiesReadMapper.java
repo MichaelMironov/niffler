@@ -11,6 +11,7 @@ public class AuthoritiesReadMapper implements Mapper<Authorities, AuthoritiesRea
     public AuthoritiesReadDto mapFrom(Authorities object) {
         return new AuthoritiesReadDto(
                 object.getId(),
-                object.getUser());
+                object.getUser().getId(),
+                object.getAuthority());
     }
 }

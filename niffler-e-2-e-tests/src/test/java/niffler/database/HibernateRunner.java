@@ -7,6 +7,8 @@ import net.bytebuddy.matcher.ElementMatchers;
 import niffler.database.dao.AuthoritiesRepository;
 import niffler.database.dao.UserRepository;
 import niffler.database.dto.AuthoritiesCreateDto;
+import niffler.database.dto.UserCreateDto;
+import niffler.database.entity.authorities.Authorities;
 import niffler.database.entity.authorities.Authority;
 import niffler.database.entity.user.AccountStatus;
 import niffler.database.entity.user.Credentials;
@@ -38,17 +40,18 @@ public class HibernateRunner {
 //            session.beginTransaction();
 
             final UserRepository userRepository = new UserRepository(session);
-            final UserReadMapper userReadMapper = new UserReadMapper();
             final AuthoritiesRepository authoritiesRepository = new AuthoritiesRepository(session);
             final AuthoritiesReadMapper authoritiesReadMapper = new AuthoritiesReadMapper();
+            final UserReadMapper userReadMapper = new UserReadMapper(authoritiesReadMapper);
             final AuthoritiesCreateMapper authoritiesCreateMapper = new AuthoritiesCreateMapper(userRepository);
+            final UserCreateMapper userCreateMapper = new UserCreateMapper();
 
             final TransactionInterceptor transactionInterceptor = new TransactionInterceptor(sessionFactory);
 
-            final AuthoritiesService authoritiesService = new ByteBuddy().subclass(AuthoritiesService.class).method(ElementMatchers.any()).intercept(MethodDelegation.to(transactionInterceptor))
+            final UserService userService = new ByteBuddy().subclass(UserService.class).method(ElementMatchers.any()).intercept(MethodDelegation.to(transactionInterceptor))
                     .make().load(AuthoritiesService.class.getClassLoader()).getLoaded()
-                    .getDeclaredConstructor(AuthoritiesRepository.class, AuthoritiesReadMapper.class, AuthoritiesCreateMapper.class)
-                    .newInstance(authoritiesRepository, authoritiesReadMapper, authoritiesCreateMapper);
+                    .getDeclaredConstructor(UserRepository.class, UserReadMapper.class, UserCreateMapper.class)
+                    .newInstance(userRepository, userReadMapper, userCreateMapper);
 
 //            final AuthoritiesService authoritiesService = new AuthoritiesService(authoritiesRepository, authoritiesReadMapper, authoritiesCreateMapper, userRepository);
 
@@ -63,15 +66,18 @@ public class HibernateRunner {
                             .accountNonExpired(true)
                             .enabled(true).build()).build();
 
-            final UserService userService = new UserService(userRepository, userReadMapper, new UserCreateMapper());
+//            final UserService userService = new UserService(userRepository, userReadMapper, new UserCreateMapper());
 
-//            final UUID at = userService.create(new UserCreateDto(Credentials.builder().username("AT").password("123").build(),
-//                    AccountStatus.builder().enabled(true).accountNonExpired(true).accountNonLocked(true).credentialsNonExpired(true).build(),
-//                    Authorities.builder().authority(Authority.WRITE).build()));
 
-            final AuthoritiesCreateDto authoritiesCreateDto = new AuthoritiesCreateDto(user, Authority.WRITE);
+            final User at = userService.create(new UserCreateDto(Credentials.builder().username("AT").password("123").build(),
+                    AccountStatus.builder().enabled(true).accountNonExpired(true).accountNonLocked(true).credentialsNonExpired(true).build(),
+                    Authorities.builder().authority(Authority.WRITE).build()));
 
-            authoritiesService.createUserWithAuthority(authoritiesCreateDto);
+            System.out.println(at);
+
+//            final AuthoritiesCreateDto authoritiesCreateDto = new AuthoritiesCreateDto(user, Authority.WRITE);
+
+//            authoritiesService.createUserWithAuthority(authoritiesCreateDto);
 
 //            authoritiesService.findById(UUID.fromString("e1db0b4d-b401-45ec-8850-398152676eb7")).ifPresent(System.out::println);
 
