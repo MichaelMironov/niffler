@@ -49,33 +49,41 @@ public class HibernateRunner {
             final TransactionInterceptor transactionInterceptor = new TransactionInterceptor(sessionFactory);
 
             final UserService userService = new ByteBuddy().subclass(UserService.class).method(ElementMatchers.any()).intercept(MethodDelegation.to(transactionInterceptor))
-                    .make().load(AuthoritiesService.class.getClassLoader()).getLoaded()
+                    .make().load(UserService.class.getClassLoader()).getLoaded()
                     .getDeclaredConstructor(UserRepository.class, UserReadMapper.class, UserCreateMapper.class)
                     .newInstance(userRepository, userReadMapper, userCreateMapper);
 
+            final AuthoritiesService authoritiesService = new ByteBuddy().subclass(AuthoritiesService.class).method(ElementMatchers.any()).intercept(MethodDelegation.to(transactionInterceptor))
+                    .make().load(AuthoritiesService.class.getClassLoader()).getLoaded()
+                    .getDeclaredConstructor(AuthoritiesRepository.class, AuthoritiesReadMapper.class, AuthoritiesCreateMapper.class)
+                    .newInstance(authoritiesRepository, authoritiesReadMapper, authoritiesCreateMapper);
+
 //            final AuthoritiesService authoritiesService = new AuthoritiesService(authoritiesRepository, authoritiesReadMapper, authoritiesCreateMapper, userRepository);
 
-            User user = User.builder()
-                    .id(UUID.randomUUID())
-                    .credentials(Credentials.builder()
-                            .username("yy7123")
-                            .password("1111").build())
-                    .accountStatus(AccountStatus.builder()
-                            .credentialsNonExpired(true)
-                            .accountNonLocked(true)
-                            .accountNonExpired(true)
-                            .enabled(true).build()).build();
+//            User user = User.builder()
+//                    .id(UUID.randomUUID())
+//                    .credentials(Credentials.builder()
+//                            .username("yy7123")
+//                            .password("1111").build())
+//                    .accountStatus(AccountStatus.builder()
+//                            .credentialsNonExpired(true)
+//                            .accountNonLocked(true)
+//                            .accountNonExpired(true)
+//                            .enabled(true).build()).build();
 
 //            final UserService userService = new UserService(userRepository, userReadMapper, new UserCreateMapper());
 
 
-            final User at = userService.create(new UserCreateDto(Credentials.builder().username("AT").password("123").build(),
+            final User at = userService.create(new UserCreateDto(Credentials.builder().username("AT6").password("123").build(),
                     AccountStatus.builder().enabled(true).accountNonExpired(true).accountNonLocked(true).credentialsNonExpired(true).build(),
                     Authorities.builder().authority(Authority.WRITE).build()));
 
             System.out.println(at);
 
-//            final AuthoritiesCreateDto authoritiesCreateDto = new AuthoritiesCreateDto(user, Authority.WRITE);
+            final AuthoritiesCreateDto authoritiesCreateDto = new AuthoritiesCreateDto(at, Authority.WRITE);
+
+            authoritiesService.createUserWithAuthority(authoritiesCreateDto);
+
 
 //            authoritiesService.createUserWithAuthority(authoritiesCreateDto);
 

@@ -15,7 +15,7 @@ public class UserCreateMapper implements Mapper<UserCreateDto, User> {
         return User.builder()
                 .credentials(object.credentials())
                 .accountStatus(object.accountStatus())
-                .authorities(object.authorities())
+//                .authorities(object.authorities())
                 .build();
     }
     //                .authorities(authoritiesRepository.findById(object.authorities().getId()).orElseThrow())
