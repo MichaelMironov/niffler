@@ -42,9 +42,8 @@ public class UserService {
 
     @Transactional
     public boolean delete(UUID id) {
-        userRepository.delete(id);
-//        optionalUser.ifPresent(user -> userRepository.delete(user.getId()));
-//        return optionalUser.isPresent();
-        return userRepository.findById(id).isPresent();
+        final Optional<User> optionalUser = userRepository.findById(id);
+        optionalUser.ifPresent(user -> userRepository.delete(user.getId()));
+        return optionalUser.isPresent();
     }
 }

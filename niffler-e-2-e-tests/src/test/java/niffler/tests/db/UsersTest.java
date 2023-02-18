@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @ExtendWith(AuthoriseExtension.class)
 class UsersTest {
 
-    @AuthUser(username = "9", password = "1234", authority = WRITE) UserCreateDto expectedUser;
+    @AuthUser(username = "1987", password = "1234", authority = WRITE) UserCreateDto expectedUser;
 
     @Test
     void createUserTest(@WithUserService UserService userService) {
@@ -34,7 +34,8 @@ class UsersTest {
         assertEquals(WRITE, actualUser.authority());
         System.out.println("DELETING");
 
-//        System.out.println(userService.delete(UUID.fromString("d014f321-99ad-4b0a-ba22-f54083a6cd23")));
+//        System.out.println(userService.delete(UUID.fromString("3b85e6ce-25fb-44cd-b5b5-e4bead9641d8")));
+//        System.out.println(userService.delete(UUID.fromString("18531a78-ac43-11ed-be7a-0242ac110002")));
 
         System.out.println(userService.findById(createdIdUser));
     }
