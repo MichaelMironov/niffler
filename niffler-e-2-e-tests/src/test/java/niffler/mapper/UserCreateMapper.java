@@ -1,22 +1,22 @@
 package niffler.mapper;
 
 import lombok.RequiredArgsConstructor;
-import niffler.database.dao.AuthoritiesRepository;
 import niffler.database.dto.UserCreateDto;
+import niffler.database.entity.authorities.Authorities;
 import niffler.database.entity.user.User;
 
 @RequiredArgsConstructor
 public class UserCreateMapper implements Mapper<UserCreateDto, User> {
 
-    AuthoritiesRepository authoritiesRepository;
-
     @Override
     public User mapFrom(UserCreateDto object) {
-        return User.builder()
+        final Authorities authorities = object.authorities();
+        final User user = User.builder()
                 .credentials(object.credentials())
                 .accountStatus(object.accountStatus())
-//                .authorities(object.authorities())
+                .authorities(object.authorities())
                 .build();
+        authorities.setUser(user);
+        return user;
     }
-    //                .authorities(authoritiesRepository.findById(object.authorities().getId()).orElseThrow())
 }

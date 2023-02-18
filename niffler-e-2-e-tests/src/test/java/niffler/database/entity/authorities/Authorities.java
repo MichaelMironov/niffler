@@ -18,7 +18,6 @@ import java.util.UUID;
 @ToString(exclude = "user")
 @Builder
 @Entity
-//@PrimaryKeyJoinColumn(name = "user_id")
 public class Authorities implements BaseEntity<UUID> {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

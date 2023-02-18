@@ -22,7 +22,6 @@ public class AuthoritiesService {
     private final AuthoritiesCreateMapper authoritiesCreateMapper;
 //    private final UserRepository userRepository;
 
-    @Transactional
     public UUID createUserWithAuthority(AuthoritiesCreateDto authoritiesCreateDto) {
         final Authorities authorities = authoritiesCreateMapper.mapFrom(authoritiesCreateDto);
 //        userRepository.save(authoritiesCreateDto.user());

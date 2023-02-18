@@ -23,9 +23,9 @@ public class UserService {
     private final UserCreateMapper userCreateMapper;
 
     @Transactional
-    public User create(UserCreateDto userDto) {
+    public UUID create(UserCreateDto userDto) {
         final User user = userCreateMapper.mapFrom(userDto);
-        return userRepository.save(user);
+        return userRepository.save(user).getId();
     }
 
     @Transactional
@@ -42,8 +42,9 @@ public class UserService {
 
     @Transactional
     public boolean delete(UUID id) {
-        final Optional<User> optionalUser = userRepository.findById(id);
-        optionalUser.ifPresent(user -> userRepository.delete(user.getId()));
-        return optionalUser.isPresent();
+        userRepository.delete(id);
+//        optionalUser.ifPresent(user -> userRepository.delete(user.getId()));
+//        return optionalUser.isPresent();
+        return userRepository.findById(id).isPresent();
     }
 }
