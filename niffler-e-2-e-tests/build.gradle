@@ -25,7 +25,8 @@ dependencies {
             'com.squareup.retrofit2:converter-jackson:2.9.0',
             'com.squareup.okhttp3:logging-interceptor:3.9.0',
             'org.springframework:spring-jdbc:6.0.4',
-            'org.hibernate:hibernate-core:6.1.7.Final'
+            'org.hibernate:hibernate-core:6.1.7.Final',
+            'org.springframework.security:spring-security-crypto:6.0.1'
 
     testCompileOnly 'org.projectlombok:lombok:1.18.20'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.20'
