@@ -8,7 +8,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Target({ElementType.LOCAL_VARIABLE, ElementType.FIELD})
+@Target({ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 @ExtendWith(AuthoriseExtension.class)
 public @interface AuthUser {

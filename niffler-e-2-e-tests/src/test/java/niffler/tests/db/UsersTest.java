@@ -6,7 +6,7 @@ import niffler.database.service.UserService;
 import niffler.jupiter.di.auth.AuthUser;
 import niffler.jupiter.di.auth.AuthoriseExtension;
 import niffler.jupiter.di.services.DatabaseSession;
-import niffler.jupiter.di.services.WithUserService;
+import niffler.jupiter.di.services.WithService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -20,10 +20,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @ExtendWith(AuthoriseExtension.class)
 class UsersTest {
 
-    @AuthUser(username = "1987", password = "1234", authority = WRITE) UserCreateDto expectedUser;
+    @WithService
+    UserService userService;
 
     @Test
-    void createUserTest(@WithUserService UserService userService) {
+    void createUserTest(@AuthUser(username = "1439", password = "1234", authority = WRITE) UserCreateDto expectedUser) {
+
+        System.out.println(expectedUser);
 
         final UUID createdIdUser = userService.create(expectedUser);
 
