@@ -7,7 +7,6 @@ import net.bytebuddy.matcher.ElementMatchers;
 import niffler.database.dao.UserRepository;
 import niffler.database.interceptor.TransactionInterceptor;
 import niffler.database.service.UserService;
-import niffler.mapper.AuthoritiesReadMapper;
 import niffler.mapper.UserCreateMapper;
 import niffler.mapper.UserReadMapper;
 import niffler.utils.HibernateUtil;
@@ -53,8 +52,7 @@ public class ServiceExtension implements TestInstancePostProcessor, BeforeAllCal
 //        final AnnotatedType annotatedType = field.getAnnotatedType();
 //        if (annotatedType instanceof WithService) {
         final UserRepository userRepository = new UserRepository(session);
-        final AuthoritiesReadMapper authoritiesReadMapper = new AuthoritiesReadMapper();
-        final UserReadMapper userReadMapper = new UserReadMapper(authoritiesReadMapper);
+        final UserReadMapper userReadMapper = new UserReadMapper();
         final UserCreateMapper userCreateMapper = new UserCreateMapper();
 
         UserService userService = new ByteBuddy().subclass(UserService.class)

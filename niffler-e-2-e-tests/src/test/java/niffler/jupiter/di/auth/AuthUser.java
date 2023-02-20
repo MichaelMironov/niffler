@@ -1,6 +1,6 @@
 package niffler.jupiter.di.auth;
 
-import niffler.database.entity.authorities.Authority;
+import niffler.database.entity.user.Authorities;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.lang.annotation.ElementType;
@@ -14,6 +14,8 @@ import java.lang.annotation.Target;
 public @interface AuthUser {
 
     String username();
+
     String password();
-    Authority authority();
+
+    Authorities[] authorities();
 }

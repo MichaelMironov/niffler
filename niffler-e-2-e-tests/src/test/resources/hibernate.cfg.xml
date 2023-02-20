@@ -14,7 +14,8 @@
         <property name="show_sql">true</property>
         <property name="format_sql">true</property>
         <mapping class="niffler.database.entity.user.User"/>
-        <mapping class="niffler.database.entity.authorities.Authorities"/>
+<!--        <mapping class="niffler.database.entity.authorities.Authorities"/>-->
+        <mapping class="niffler.database.entity.user.Authorities"/>
 <!--        <property name="hbm2ddl.auto">update</property>-->
     </session-factory>
 </hibernate-configuration>

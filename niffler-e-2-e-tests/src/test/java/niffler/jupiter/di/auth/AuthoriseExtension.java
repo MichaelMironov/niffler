@@ -1,8 +1,8 @@
 package niffler.jupiter.di.auth;
 
 import niffler.database.dto.UserCreateDto;
-import niffler.database.entity.authorities.Authorities;
 import niffler.database.entity.user.AccountStatus;
+import niffler.database.entity.user.Authorities;
 import niffler.database.entity.user.Credentials;
 import niffler.database.service.UserService;
 import org.junit.jupiter.api.extension.*;
@@ -24,10 +24,12 @@ public class AuthoriseExtension implements ParameterResolver, AfterTestExecution
     }
 
     private void createDto(AuthUser authUser, ExtensionContext context) {
-        final UserCreateDto userCreateDto = new UserCreateDto(
+
+        List<Authorities> authorities = new ArrayList<>(Arrays.asList(authUser.authorities()));
+        final UserCreateDto userCreateDto = new UserCreateDto(null,
                 Credentials.builder().username(authUser.username()).password(authUser.password()).build(),
                 AccountStatus.builder().enabled(true).accountNonExpired(true).accountNonLocked(true).credentialsNonExpired(true).build(),
-                Authorities.builder().authority(authUser.authority()).build());
+                authorities);
         Set<UserCreateDto> users = new HashSet<>();
         users.add(userCreateDto);
         context.getStore(NAMESPACE_AUTH_USERS).put("AuthoriseUsers", users);
@@ -55,6 +57,6 @@ public class AuthoriseExtension implements ParameterResolver, AfterTestExecution
     public void afterTestExecution(ExtensionContext context) throws Exception {
         final HashSet<UserCreateDto> authoriseUsers = (HashSet<UserCreateDto>) context.getStore(NAMESPACE_AUTH_USERS).get("AuthoriseUsers");
         final UserService service = (UserService) context.getStore(NAMESPACE_SERVICES).get("Services");
-        authoriseUsers.forEach(authoriseUser -> service.delete(authoriseUser.authorities().getUser().getId()));
+//        authoriseUsers.forEach(authoriseUser -> service.delete(authoriseUser.authorities().getUser().getId()));
     }
 }

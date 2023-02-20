@@ -1,10 +1,14 @@
 package niffler.database.entity.user;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import niffler.database.entity.BaseEntity;
-import niffler.database.entity.authorities.Authorities;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @NamedEntityGraph(
@@ -16,21 +20,20 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString(exclude = {"authorities"})
 @Entity
 @Table(name = "users", schema = "public")
-@Inheritance(strategy = InheritanceType.JOINED)
 public class User implements BaseEntity<UUID> {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
     private Credentials credentials;
     private AccountStatus accountStatus;
-    @OneToOne(
-            mappedBy = "user",
-            cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY,
-            optional = false)
-    private Authorities authorities;
+
+    @ElementCollection
+    @CollectionTable(name = "authorities", joinColumns = @JoinColumn(name = "user_id"))
+    @Enumerated(EnumType.STRING)
+    @Column(name = "authority")
+    private List<Authorities> authorities = new ArrayList<>();
 
 }

@@ -1,11 +1,15 @@
 package niffler.database.dto;
 
-import niffler.database.entity.authorities.Authorities;
 import niffler.database.entity.user.AccountStatus;
 import niffler.database.entity.user.Credentials;
+import niffler.database.entity.user.Authorities;
+
+import java.util.List;
+import java.util.UUID;
 
 public record UserCreateDto(
+        UUID id,
         Credentials credentials,
-                            AccountStatus accountStatus,
-                            Authorities authorities) {
+        AccountStatus accountStatus,
+        List<Authorities> authorities) {
 }
