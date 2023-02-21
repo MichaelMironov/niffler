@@ -28,8 +28,8 @@ dependencies {
 
 docker {
     dependsOn build
-    name "dtuchs/niffler-gateway:${project.version}"
-    tag 'latest', 'dtuchs/niffler-gateway:latest'
+    name "miron9/niffler-gateway:${project.version}"
+    tag 'latest', 'miron9/niffler-gateway:latest'
     files bootJar.archiveFile
     buildArgs([
             APP_VER: project.version
