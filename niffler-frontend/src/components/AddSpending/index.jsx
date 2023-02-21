@@ -10,7 +10,7 @@ export const AddSpending = ({categories, addSpendingCallback}) => {
 
     const [data, setData] = useState({
         amount: "",
-        description: "",
+        category: "",
         category: null,
         spendDate: new Date(),
     });
@@ -48,12 +48,12 @@ export const AddSpending = ({categories, addSpendingCallback}) => {
                 <FormCalendar label={"Spend date"}
                               value={data.spendDate}
                               onChange={(spendDate) => setData({...data, spendDate})}/>
-                <FormInput placeholder={"Spending description"}
+                <FormInput placeholder={"Spending category"}
                            label={"Description"}
                            type="text"
                            max={255}
-                           value={data.description}
-                           handleChangeValue={(evt) => setData({...data, description: evt.target.value})}/>
+                           value={data.category}
+                           handleChangeValue={(evt) => setData({...data, category: evt.target.value})}/>
                 <Button buttonText={"Add new spending"}/>
             </form>
         </section>

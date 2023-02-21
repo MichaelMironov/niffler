@@ -62,11 +62,11 @@ export const SpendingRow = ({spending, isSelected, handleCheckboxClick, isGraphO
                 <td>
                     <EditableValue
                         type="text"
-                        value={editableSpending?.description}
+                        value={editableSpending?.category}
                         isEditState={isEdit}
-                        fieldName={"description"}
+                        fieldName={"category"}
                         placeholder={null}
-                        onValueChange={(evt) => setEditableSpending({...editableSpending, description: evt.target.value})}
+                        onValueChange={(evt) => setEditableSpending({...editableSpending, category: evt.target.value})}
                     />
                 </td>
                 <td>
