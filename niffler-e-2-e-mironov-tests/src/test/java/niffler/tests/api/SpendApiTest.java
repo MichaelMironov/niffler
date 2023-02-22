@@ -26,7 +26,7 @@ public class SpendApiTest {
     private @Client
     UserClient userClient;
 
-    @ValueSource(strings = {"data/spend.json"})
+    @ValueSource(strings = {"data/spend.json", "data/spend1.json"})
     @ParameterizedTest
     void addSpend(@Spend SpendJson spend) throws IOException {
         final SpendJson created = spendClient.createSpendJson(spend);

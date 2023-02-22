@@ -1,6 +1,6 @@
 package niffler.database.dao;
 
-import niffler.data.entity.Spend;
+import niffler.database.entity.spends.Spend;
 import niffler.data.enums.CurrencyValues;
 import niffler.utils.ConnectionManager;
 

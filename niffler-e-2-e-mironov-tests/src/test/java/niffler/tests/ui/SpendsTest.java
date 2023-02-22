@@ -1,6 +1,6 @@
 package niffler.tests.ui;
 
-import niffler.data.entity.Spend;
+import niffler.database.entity.spends.Spend;
 import niffler.jupiter.di.spend.SpendInjector;
 import niffler.jupiter.di.spend.WithSpend;
 import niffler.data.enums.CurrencyValues;

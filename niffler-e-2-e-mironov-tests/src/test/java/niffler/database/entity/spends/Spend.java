@@ -1,4 +1,4 @@
-package niffler.data.entity;
+package niffler.database.entity.spends;
 
 import niffler.data.enums.CurrencyValues;
 import niffler.database.entity.BaseEntity;

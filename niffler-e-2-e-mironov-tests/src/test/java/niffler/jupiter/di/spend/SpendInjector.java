@@ -1,7 +1,7 @@
 package niffler.jupiter.di.spend;
 
 import lombok.SneakyThrows;
-import niffler.data.entity.Spend;
+import niffler.database.entity.spends.Spend;
 import niffler.database.dao.CategoriesRepository;
 import niffler.database.dao.SpendsRepository;
 import niffler.database.entity.categories.Categories;
