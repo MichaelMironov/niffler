@@ -15,7 +15,7 @@ import java.util.UUID;
 @EqualsAndHashCode(exclude = "authorities")
 @ToString(exclude = "authorities")
 @Entity
-@Table(name = "users")
+@Table(name = "users", schema = "public", catalog = "niffler-auth")
 public class User implements BaseEntity<UUID> {
 
     @Id

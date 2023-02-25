@@ -6,7 +6,7 @@ import niffler.database.entity.BaseEntity;
 
 import java.util.*;
 
-@NamedQuery(name ="findByUsername" , query = "select u from Users u where u.username = :username")
+@NamedQuery(name ="findByUsername" , query = "select u from UsersEntity u where u.username = :username")
 
 @Data
 @Builder
@@ -14,7 +14,7 @@ import java.util.*;
 @NoArgsConstructor
 @Entity
 @Table(name = "users", schema = "public", catalog = "niffler-userdata")
-public class Users implements BaseEntity<UUID> {
+public class UsersEntity implements BaseEntity<UUID> {
 
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
@@ -28,6 +28,7 @@ public class Users implements BaseEntity<UUID> {
 
     private String surname;
 
+    @Column(columnDefinition = "bytea")
     private byte[] photo;
 
 }
