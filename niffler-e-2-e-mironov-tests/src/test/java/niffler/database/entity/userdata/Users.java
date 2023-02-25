@@ -13,7 +13,6 @@ import java.util.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@ToString(exclude = "friends")
 @Table(name = "users", schema = "public", catalog = "niffler-userdata")
 public class Users implements BaseEntity<UUID> {
 
@@ -31,15 +30,4 @@ public class Users implements BaseEntity<UUID> {
 
     private byte[] photo;
 
-//    @Transient
-    @Builder.Default
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "friends",
-              joinColumns = @JoinColumn(name = "user_id"),
-    inverseJoinColumns = @JoinColumn(name = "friend_id"))
-    private List<Users> friends = new ArrayList<>();
-
-    public void addFriends(Users... friend){
-       this.friends.addAll(Arrays.asList(friend));
-    }
 }

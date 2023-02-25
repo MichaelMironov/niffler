@@ -2,56 +2,71 @@ package niffler.database.dao;
 
 import jakarta.persistence.EntityManager;
 import niffler.database.entity.userdata.Users;
-import org.junit.jupiter.api.Assertions;
-import org.openqa.selenium.devtools.v85.runtime.Runtime;
 
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class UsersDataRepository extends RepositoryBase<UUID, Users> {
     public UsersDataRepository(EntityManager entityManager) {
         super(Users.class, entityManager);
     }
 
-    public void addFriends(Users user, List<Users> friends) {
+    public void addAll(Users... users) {
+        for (Users user : users) {
+            entityManager.persist(user);
+        }
+    }
+
+    public void delete(Users... users) {
+        for (Users user : users) {
+            entityManager.remove(entityManager.createNamedQuery("findByUsername", Users.class)
+                    .setParameter("username", user.getUsername())
+                    .getSingleResult());
+        }
+    }
+
+    public void addFriendsToUser(List<Users> friends, Users user) {
 
         final List<Users> allUsers = new ArrayList<>(friends);
         allUsers.add(user);
 
-        System.out.println(allUsers);
+        //Checking for adding a non-existent user
         final List<Users> usersList = allUsers.stream().map(this::checkUsersExisting).toList();
-        System.out.println( "AFTER REQUEST" +usersList);
 
-
+        //Adding existing users
+        List<Users> existUsers = new ArrayList<>();
         for (Users users : usersList) {
-
-            System.out.println(users.getId());
+            if (users != null) {
+                existUsers.add(users);
+                if (Objects.equals(users.getUsername(), user.getUsername()))
+                    user = users;
+            }
         }
 
-
-        usersList.forEach(friend ->{
+        //Adding existing users into friends table
+        for (Users existUser : existUsers) {
             entityManager.createNativeQuery("""
-                insert into friends (user_id, friend_id)
-                values (%s, %s)
-                """.formatted(user.getId(), friend.getId()));
-        });
+                            insert into friends (user_id, friend_id)
+                            values ('%s', '%s')
+                            """.formatted(user.getId(), existUser.getId()))
+                    .executeUpdate();
+        }
     }
 
+    /**
+     * @param checkingUsers all received users
+     * @return null if user not found in db, else return persisted entity
+     * @throws NoSuchElementException if no one user exists on the database
+     */
     private Users checkUsersExisting(Users checkingUsers) {
 
         final List<Users> usersList = entityManager.createNamedQuery("findByUsername", Users.class)
                 .setParameter("username", checkingUsers.getUsername())
                 .getResultStream().map(Objects::requireNonNull).toList();
 
-        final ArrayList<Users> arrayList = new ArrayList<>();
         for (Users users : usersList) {
-            if( !users.toString().isEmpty() && !users.toString().isBlank())
-                System.out.println(users);
-                arrayList.add(users);
-//            if (!users.getUsername().isEmpty()) return users;
-//            else throw new NoSuchElementException("Friends not exist in database");
+            if (!users.getUsername().isEmpty()) return users;
+            else throw new NoSuchElementException("Friends not exist in database");
         }
-        return arrayList.get(0);
+        return null;
     }
 }
