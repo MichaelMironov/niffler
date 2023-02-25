@@ -1,7 +1,7 @@
 package niffler.database.dao;
 
 import jakarta.persistence.EntityManager;
-import niffler.database.entity.users.User;
+import niffler.database.entity.auth.User;
 
 import java.util.UUID;
 

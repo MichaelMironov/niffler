@@ -17,7 +17,7 @@ public abstract class RepositoryBase<K extends Serializable, E extends BaseEntit
 
     private final Class<E> clazz;
     @Getter
-    private final EntityManager entityManager;
+    protected final EntityManager entityManager;
 
     @Override
     public List<E> findAll() {
@@ -36,7 +36,6 @@ public abstract class RepositoryBase<K extends Serializable, E extends BaseEntit
     public void delete(K uuid) {
         final Optional<E> byId = findById(uuid);
         entityManager.remove(byId.get());
-        entityManager.flush();
     }
 
     @Override

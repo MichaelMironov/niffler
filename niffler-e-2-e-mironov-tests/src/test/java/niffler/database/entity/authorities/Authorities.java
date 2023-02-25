@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import niffler.database.entity.users.User;
+import niffler.database.entity.auth.User;
 
 import java.util.UUID;
 

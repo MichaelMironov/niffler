@@ -1,4 +1,4 @@
-package niffler.database.entity.users;
+package niffler.database.entity.auth;
 
 import jakarta.persistence.*;
 import lombok.*;

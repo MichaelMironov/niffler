@@ -1,7 +1,7 @@
 package niffler.jupiter.di.auth;
 
 import niffler.database.entity.authorities.Authorities;
-import niffler.database.entity.users.User;
+import niffler.database.entity.auth.User;
 import org.hibernate.Session;
 import org.junit.jupiter.api.extension.*;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;

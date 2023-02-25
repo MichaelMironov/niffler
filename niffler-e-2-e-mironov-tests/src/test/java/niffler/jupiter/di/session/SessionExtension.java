@@ -1,6 +1,8 @@
 package niffler.jupiter.di.session;
 
+import jakarta.persistence.EntityManager;
 import lombok.SneakyThrows;
+import niffler.database.dao.RepositoryBase;
 import niffler.database.dao.UserRepository;
 import niffler.database.interceptor.TransactionInterceptor;
 import niffler.utils.HibernateUtil;
@@ -11,6 +13,7 @@ import org.junit.jupiter.api.extension.BeforeAllCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.TestInstancePostProcessor;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Proxy;
 import java.util.Arrays;
@@ -32,7 +35,7 @@ public class SessionExtension implements TestInstancePostProcessor, BeforeAllCal
                 (proxy, method, args1) -> method.invoke(sessionFactory.getCurrentSession(), args1));
         transactionInterceptor = new TransactionInterceptor(sessionFactory);
         session.beginTransaction();
-        session.doWork(connection -> connection.setAutoCommit(true));
+//        session.doWork(connection -> connection.setAutoCommit(true));
         extensionContext.getStore(NAMESPACE_SESSION).put("Session", session);
     }
 
@@ -46,12 +49,17 @@ public class SessionExtension implements TestInstancePostProcessor, BeforeAllCal
 
     @SneakyThrows
     private void addSession(Object testInstance, Field field, ExtensionContext extensionContext) {
-        UserRepository userRepository = new UserRepository(session);
-        field.set(testInstance, userRepository);
+        System.out.println(field.getType());
+        final Class<?> type = field.getType();
+        final Constructor<?> declaredConstructor = type.getDeclaredConstructor(EntityManager.class);
+
+        RepositoryBase repository = (RepositoryBase) declaredConstructor.newInstance(session);
+        field.set(testInstance, repository);
     }
 
     @Override
     public void afterAll(ExtensionContext context) throws Exception {
+        session.getTransaction().commit();
         Objects.requireNonNull(sessionFactory).close();
     }
 }

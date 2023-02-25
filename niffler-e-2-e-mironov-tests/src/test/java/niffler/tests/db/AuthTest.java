@@ -1,6 +1,6 @@
 package niffler.tests.db;
 
-import niffler.database.entity.users.User;
+import niffler.database.entity.auth.User;
 import niffler.jupiter.di.auth.AuthoriseExtension;
 import niffler.jupiter.di.auth.UserEntity;
 import niffler.jupiter.di.session.SessionExtension;
