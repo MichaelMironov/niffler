@@ -1,18 +1,25 @@
 package niffler.database.entity.userdata;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import niffler.database.entity.BaseEntity;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.UUID;
 
-@NamedQuery(name ="findByUsername" , query = "select u from UsersEntity u where u.username = :username")
+@NamedQuery(name = "findByUsername", query = "select u from UsersEntity u where u.username = :username")
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+
 @Table(name = "users", schema = "public", catalog = "niffler-userdata")
 public class UsersEntity implements BaseEntity<UUID> {
 
@@ -30,5 +37,16 @@ public class UsersEntity implements BaseEntity<UUID> {
 
     @Column(columnDefinition = "bytea")
     private byte[] photo;
+
+    @Builder.Default
+    @OneToMany
+    @JoinTable(name = "friends",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "friend_id"))
+    private List<UsersEntity> friends = new ArrayList<>();
+
+    public void setFriends(UsersEntity... friends) {
+        this.friends.addAll(Arrays.asList(friends));
+    }
 
 }
