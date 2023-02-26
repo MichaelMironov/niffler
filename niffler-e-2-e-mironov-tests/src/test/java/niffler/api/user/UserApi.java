@@ -7,9 +7,7 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 
-public interface UserService {
-
-    String baseUrl = "http://127.0.0.1:8089";
+public interface UserApi {
 
     @POST("/updateUserInfo")
     Call<UserJson> updateUserInfo(@Body UserJson userJson);
