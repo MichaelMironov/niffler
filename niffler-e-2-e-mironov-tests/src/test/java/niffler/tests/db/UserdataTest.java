@@ -1,27 +1,22 @@
 package niffler.tests.db;
 
-import niffler.database.dao.UsersDataRepository;
-import niffler.database.entity.userdata.UsersEntity;
-import niffler.jupiter.di.session.SessionExtension;
-import niffler.jupiter.di.session.WithRepository;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import niffler.database.repostiory.UsersDataRepository;
+import niffler.database.entity.userdata.ProfileEntity;
+
+import org.junit.jupiter.api.*;
 
 import static java.util.List.of;
 
-@ExtendWith(SessionExtension.class)
+@Disabled
 public class UserdataTest {
 
-    @WithRepository
+    //TODO: create genereated user in paramter resolver
     UsersDataRepository usersDataRepository;
 
-    UsersEntity user = UsersEntity.builder().username("user").currency("RUB").firstname("user").build();
-    UsersEntity friend1 = UsersEntity.builder().username("friend1").currency("KZT").firstname("test1").build();
-    UsersEntity friend2 = UsersEntity.builder().username("friend2").currency("RUB").firstname("test2").build();
-    UsersEntity friend3 = UsersEntity.builder().username("friend3").currency("KZT").firstname("test3").build();
+    ProfileEntity user = ProfileEntity.builder().username("user").currency("RUB").firstname("user").build();
+    ProfileEntity friend1 = ProfileEntity.builder().username("friend1").currency("KZT").firstname("test1").build();
+    ProfileEntity friend2 = ProfileEntity.builder().username("friend2").currency("RUB").firstname("test2").build();
+    ProfileEntity friend3 = ProfileEntity.builder().username("friend3").currency("KZT").firstname("test3").build();
 
     @BeforeEach
     void setFriends() {

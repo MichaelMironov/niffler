@@ -1,9 +1,8 @@
-package niffler.database.dao;
+package niffler.database.repostiory;
 
 import niffler.database.entity.BaseEntity;
 
 import java.io.Serializable;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;

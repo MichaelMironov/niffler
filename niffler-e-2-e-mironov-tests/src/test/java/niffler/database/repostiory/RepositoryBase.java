@@ -1,4 +1,4 @@
-package niffler.database.dao;
+package niffler.database.repostiory;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.criteria.CriteriaQuery;

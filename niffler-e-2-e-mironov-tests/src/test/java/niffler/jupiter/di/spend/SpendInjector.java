@@ -2,8 +2,8 @@ package niffler.jupiter.di.spend;
 
 import lombok.SneakyThrows;
 import niffler.database.entity.spends.Spend;
-import niffler.database.dao.CategoriesRepository;
-import niffler.database.dao.SpendsRepository;
+import niffler.database.repostiory.CategoriesRepository;
+import niffler.database.repostiory.SpendsRepository;
 import niffler.database.entity.categories.Categories;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.extension.ExtensionContext;

@@ -1,4 +1,4 @@
-package niffler.database.dao;
+package niffler.database.repostiory;
 
 import niffler.database.entity.spends.Spend;
 import niffler.data.enums.CurrencyValues;

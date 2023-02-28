@@ -1,4 +1,4 @@
-package niffler.database.dao;
+package niffler.database.repostiory;
 
 import niffler.database.entity.categories.Categories;
 import niffler.utils.ConnectionManager;

@@ -1,6 +1,6 @@
 package niffler.jupiter.di.auth;
 
-import niffler.database.entity.authorities.Authority;
+import niffler.database.entity.auth.Authority;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.lang.annotation.ElementType;

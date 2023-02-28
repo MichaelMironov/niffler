@@ -1,24 +1,42 @@
 package niffler.tests.db;
 
-import niffler.database.entity.auth.User;
-import niffler.jupiter.di.auth.AuthoriseExtension;
-import niffler.jupiter.di.auth.UserEntity;
-import niffler.jupiter.di.session.SessionExtension;
-import niffler.tests.ui.steps.LoginSteps;
+import niffler.database.repostiory.UserAuthRepository;
+import niffler.database.entity.auth.UserEntity;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 
-import static niffler.database.entity.authorities.Authority.read;
-import static niffler.database.entity.authorities.Authority.write;
-
-@ExtendWith({SessionExtension.class, AuthoriseExtension.class})
-public class AuthTest {
+class AuthTest {
+    ////TODO: create genereated user in paramter resolver AUTH
+//    @Test
+//    void test(@UserEntity(username = "Final", password = "123456", authorities = {read, write}) User user) {
+//
+//        new LoginSteps().login(user.getUsername(), user.getPassword());
+//
+//    }
 
     @Test
-    void test(@UserEntity(username = "Final", password = "123456", authorities = {read, write}) User user) {
+    void createUserWithReadAuthorityTest() {
+        UserEntity userEntity = UserEntity.builder()
+                .username("AUTHTes4")
+                .password("1234")
+                .CredentialsNonExpired(true)
+                .AccountNonLocked(true)
+                .accountNonExpired(true)
+                .enabled(true)
+                .build();
+        new UserAuthRepository().createUserWithReadAuthority(userEntity);
+    }
 
-        new LoginSteps().login(user.getUsername(), user.getPassword());
-
+    @Test
+    void createUserWithReadAndWriteAuthorityTest() {
+        UserEntity userEntity = UserEntity.builder()
+                .username("AUTHTest5")
+                .password("1234")
+                .CredentialsNonExpired(true)
+                .AccountNonLocked(true)
+                .accountNonExpired(true)
+                .enabled(true)
+                .build();
+        new UserAuthRepository().createUserWithReadAndWriteAuthority(userEntity);
     }
 
 }

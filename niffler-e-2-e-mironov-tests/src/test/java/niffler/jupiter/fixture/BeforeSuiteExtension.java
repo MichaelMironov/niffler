@@ -1,7 +1,7 @@
 package niffler.jupiter.fixture;
 
 import com.codeborne.selenide.Configuration;
-import niffler.database.dao.SpendsRepository;
+import niffler.database.repostiory.SpendsRepository;
 import niffler.tests.ui.steps.CheckSteps;
 import org.junit.jupiter.api.extension.ExtensionContext;
 

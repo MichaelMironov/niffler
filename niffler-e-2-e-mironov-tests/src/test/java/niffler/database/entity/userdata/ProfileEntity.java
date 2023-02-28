@@ -21,7 +21,7 @@ import java.util.UUID;
 @Entity
 
 @Table(name = "users", schema = "public", catalog = "niffler-userdata")
-public class UsersEntity implements BaseEntity<UUID> {
+public class ProfileEntity implements BaseEntity<UUID> {
 
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
@@ -43,9 +43,9 @@ public class UsersEntity implements BaseEntity<UUID> {
     @JoinTable(name = "friends",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "friend_id"))
-    private List<UsersEntity> friends = new ArrayList<>();
+    private List<ProfileEntity> friends = new ArrayList<>();
 
-    public void setFriends(UsersEntity... friends) {
+    public void setFriends(ProfileEntity... friends) {
         this.friends.addAll(Arrays.asList(friends));
     }
 
