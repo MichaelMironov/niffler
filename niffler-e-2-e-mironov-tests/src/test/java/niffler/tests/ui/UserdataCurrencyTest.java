@@ -1,4 +1,4 @@
-package niffler.tests.db;
+package niffler.tests.ui;
 
 import com.codeborne.selenide.Condition;
 import niffler.database.dao.UsersDAO;
@@ -16,12 +16,12 @@ import static io.qameta.allure.Allure.step;
 import static niffler.jupiter.di.dao.DAOType.SPRING;
 
 @ExtendWith(DAOResolver.class)
-class UsersDataTests {
+class UserdataCurrencyTest {
 
     @DAO(SPRING)
     private UsersDAO usersDAO;
     private String originalCurrency;
-//TODO: create genereated user in paramter resolver
+
     @BeforeEach
     void createTestData() {
         ProfileEntity user = usersDAO.getByUsername("mike");

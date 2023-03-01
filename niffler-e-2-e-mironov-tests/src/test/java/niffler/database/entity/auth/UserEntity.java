@@ -9,6 +9,7 @@ import java.util.Set;
 import java.util.UUID;
 
 import static jakarta.persistence.FetchType.EAGER;
+import static jakarta.persistence.FetchType.LAZY;
 
 @Entity
 @Data
@@ -17,7 +18,7 @@ import static jakarta.persistence.FetchType.EAGER;
 @NoArgsConstructor
 @EqualsAndHashCode(exclude = "authorities")
 @ToString(exclude = "authorities")
-@Table(name = "users")
+@Table(name = "users", schema = "public", catalog = "niffler-auth")
 public class UserEntity implements BaseEntity<UUID> {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -37,11 +38,11 @@ public class UserEntity implements BaseEntity<UUID> {
     private Boolean accountNonExpired;
 
     @Column(name = "account_non_locked", nullable = false)
-    private Boolean AccountNonLocked;
+    private Boolean accountNonLocked;
 
     @Column(name = "credentials_non_expired", nullable = false)
-    private Boolean CredentialsNonExpired;
+    private Boolean credentialsNonExpired;
 
-    @OneToMany(fetch = EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "user")
+    @OneToMany(fetch = LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "user")
     private Set<AuthorityEntity> authorities = new HashSet<>();
 }

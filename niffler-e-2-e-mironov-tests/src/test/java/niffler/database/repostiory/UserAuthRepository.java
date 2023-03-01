@@ -1,8 +1,10 @@
 package niffler.database.repostiory;
 
+import niffler.database.DataBase;
 import niffler.database.dao.PostgresHibernateUsersDAO;
 import niffler.database.entity.auth.AuthorityEntity;
 import niffler.database.entity.auth.UserEntity;
+import niffler.database.jpa.EmfContext;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 

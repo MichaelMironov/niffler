@@ -1,9 +1,11 @@
 package niffler.jupiter.di.dao;
 
 import lombok.SneakyThrows;
+import niffler.database.DataBase;
 import niffler.database.dao.PostgresHibernateUsersDAO;
 import niffler.database.dao.PostgresJdbcUsersDAO;
 import niffler.database.dao.PostgresSpringJdbcUsersDAO;
+import niffler.database.jpa.EmfContext;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.TestInstancePostProcessor;
 

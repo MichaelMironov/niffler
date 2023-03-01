@@ -1,5 +1,6 @@
 package niffler.database.dao;
 
+import jakarta.persistence.EntityManager;
 import niffler.database.DataBase;
 import niffler.database.entity.auth.UserEntity;
 import niffler.database.jpa.EmfContext;
@@ -12,7 +13,7 @@ public class PostgresHibernateUsersDAO extends JpaService {
 
 
     public void addUser(UserEntity users) {
-        merge(users);
+        persist(users);
     }
 
     public void addUsers(UserEntity... userEntities) {
@@ -29,10 +30,13 @@ public class PostgresHibernateUsersDAO extends JpaService {
         remove(userEntity);
     }
 
+    public UserEntity getByUsername(String username) {
+        return em.createQuery("select u from UserEntity u where u.username=:username", UserEntity.class)
+                .setParameter("username", username)
+                .getSingleResult();
+    }
 
-//    public UsersDataEntity getByUsername(String username) {
-//        return em.createQuery("select u from UsersEntity u where u.username=:username", UsersDataEntity.class)
-//                .setParameter("username", username)
-//                .getSingleResult();
-//    }
+    public void deleteByUsername(String username) {
+        em.remove(getByUsername(username));
+    }
 }

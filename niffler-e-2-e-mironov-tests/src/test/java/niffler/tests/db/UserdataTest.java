@@ -1,38 +1,39 @@
 package niffler.tests.db;
 
-import niffler.database.repostiory.UsersDataRepository;
+import io.qameta.allure.AllureId;
+import niffler.database.dao.PostgresJdbcUsersDAO;
 import niffler.database.entity.userdata.ProfileEntity;
-
-import org.junit.jupiter.api.*;
+import niffler.jupiter.di.dao.DAO;
+import niffler.jupiter.di.dao.DAOResolver;
+import niffler.jupiter.di.profile.EntityGenerator;
+import niffler.jupiter.di.profile.Profile;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import static java.util.List.of;
+import static niffler.jupiter.di.dao.DAOType.JDBC;
 
-@Disabled
+@ExtendWith({DAOResolver.class, EntityGenerator.class})
 public class UserdataTest {
 
-    //TODO: create genereated user in paramter resolver
-    UsersDataRepository usersDataRepository;
+    @DAO(JDBC)
+    PostgresJdbcUsersDAO usersDataRepository;
 
-    ProfileEntity user = ProfileEntity.builder().username("user").currency("RUB").firstname("user").build();
-    ProfileEntity friend1 = ProfileEntity.builder().username("friend1").currency("KZT").firstname("test1").build();
-    ProfileEntity friend2 = ProfileEntity.builder().username("friend2").currency("RUB").firstname("test2").build();
-    ProfileEntity friend3 = ProfileEntity.builder().username("friend3").currency("KZT").firstname("test3").build();
-
-    @BeforeEach
-    void setFriends() {
-        //Add test users in database
-        usersDataRepository.addAll(user, friend1, friend2, friend3);
-        user.setFriends(friend1, friend2, friend3);
-    }
-
+    @AllureId("7")
     @Test
-    void testAddingFriends() {
+    void testAddingFriends(@Profile(username = "user", firstname = "test7") ProfileEntity user,
+                           @Profile(username = "friend1", firstname = "test7", currency = "KZT") ProfileEntity friend1,
+                           @Profile(username = "friend2", firstname = "test7", currency = "KZT") ProfileEntity friend2,
+                           @Profile(username = "friend3", firstname = "test7", currency = "KZT") ProfileEntity friend3) {
+
+        usersDataRepository.addUsers(user, friend1, friend2, friend3);
+        user.setFriends(friend1, friend2, friend3);
+
         usersDataRepository.updateUser(user);
         Assertions.assertEquals(user.getFriends().toString(), of(friend1, friend2, friend3).toString());
+
+        usersDataRepository.removeAll(user, friend1, friend2, friend3);
     }
 
-    @AfterEach
-    void deletingTestUsers() {
-        usersDataRepository.delete(user, friend1, friend2, friend3);
-    }
 }

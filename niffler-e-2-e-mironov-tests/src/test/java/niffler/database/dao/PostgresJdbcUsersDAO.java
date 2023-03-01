@@ -23,8 +23,8 @@ public class PostgresJdbcUsersDAO implements UsersDAO {
             int count = 0;
             for (ProfileEntity user : users) {
                 statement.addBatch("""
-            INSERT INTO public.users (username, currency, firstname, surname, photo)
-            VALUES ('%s', '%s', '%s', '%s', '%s');""".formatted(
+                        INSERT INTO public.users (username, currency, firstname, surname, photo)
+                        VALUES ('%s', '%s', '%s', '%s', '%s');""".formatted(
                         user.getUsername(),
                         user.getCurrency(),
                         user.getFirstname(),
@@ -44,8 +44,8 @@ public class PostgresJdbcUsersDAO implements UsersDAO {
     public ProfileEntity addUser(ProfileEntity users) {
         try (final Connection connection = dataSource.getConnection();
              final PreparedStatement preparedStatement = connection.prepareStatement("""
-            INSERT INTO public.users (username, currency, firstname, surname, photo)
-            VALUES (?, ?, ?, ?, ?) RETURNING *;""")) {
+                     INSERT INTO public.users (username, currency, firstname, surname, photo)
+                     VALUES (?, ?, ?, ?, ?) RETURNING *;""")) {
             preparedStatement.setString(1, users.getUsername());
             preparedStatement.setString(2, users.getCurrency());
             preparedStatement.setString(3, users.getFirstname());
@@ -69,8 +69,8 @@ public class PostgresJdbcUsersDAO implements UsersDAO {
             int count = 0;
             for (ProfileEntity user : users) {
                 statement.addBatch("""
-            UPDATE users SET currency = '%s', firstname = '%s', surname = '%s', photo = '%s'
-            WHERE username = '%s';""".formatted(
+                        UPDATE users SET currency = '%s', firstname = '%s', surname = '%s', photo = '%s'
+                        WHERE username = '%s';""".formatted(
                         user.getCurrency(),
                         user.getFirstname(),
                         user.getSurname(),
@@ -101,6 +101,23 @@ public class PostgresJdbcUsersDAO implements UsersDAO {
     @Override
     public void remove(ProfileEntity user) {
 
+    }
+
+
+    public void removeAll(ProfileEntity... users) {
+        try (Connection connection = dataSource.getConnection();
+             Statement statement = connection.createStatement()) {
+            connection.setAutoCommit(false);
+            for (ProfileEntity user : users) {
+                statement.addBatch("""
+                        DELETE FROM users WHERE username = '%s';""".formatted(
+                        user.getUsername()));
+            }
+            statement.executeBatch();
+            connection.commit();
+        } catch (SQLException e) {
+            throw new DatabaseException(e);
+        }
     }
 
     @Override
