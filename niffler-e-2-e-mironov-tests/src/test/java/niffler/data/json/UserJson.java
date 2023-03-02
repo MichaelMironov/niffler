@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import niffler.data.enums.CurrencyValues;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -21,10 +22,11 @@ public class UserJson {
     @JsonProperty("currency")
     private CurrencyValues currency;
     @JsonProperty("photo")
-    private byte[] photo;
+    private String photo;
+    @JsonProperty("password")
+    private String password;
 
-    public UserJson() {
-    }
+    private transient List<CategoryJson> categoryJsons;
 
     public UUID getId() {
         return id;
@@ -66,12 +68,28 @@ public class UserJson {
         this.currency = currency;
     }
 
-    public byte[] getPhoto() {
+    public String getPhoto() {
         return photo;
     }
 
-    public void setPhoto(byte[] photo) {
+    public void setPhoto(String photo) {
         this.photo = photo;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public List<CategoryJson> getCategoryJsons() {
+        return categoryJsons;
+    }
+
+    public void setCategoryJsons(List<CategoryJson> categoryJsons) {
+        this.categoryJsons = categoryJsons;
     }
 
     @Override
@@ -79,13 +97,11 @@ public class UserJson {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UserJson userJson = (UserJson) o;
-        return id.equals(userJson.id) && Objects.equals(userName, userJson.userName) && Objects.equals(firstname, userJson.firstname) && Objects.equals(surname, userJson.surname) && currency == userJson.currency && Arrays.equals(photo, userJson.photo);
+        return Objects.equals(id, userJson.id) && Objects.equals(userName, userJson.userName) && Objects.equals(firstname, userJson.firstname) && Objects.equals(surname, userJson.surname) && currency == userJson.currency && Objects.equals(photo, userJson.photo) && Objects.equals(password, userJson.password);
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(id, userName, firstname, surname, currency);
-        result = 31 * result + Arrays.hashCode(photo);
-        return result;
+        return Objects.hash(id, userName, firstname, surname, currency, photo, password);
     }
 }

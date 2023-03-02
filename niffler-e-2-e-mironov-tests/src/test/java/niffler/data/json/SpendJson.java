@@ -2,11 +2,8 @@ package niffler.data.json;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSetter;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.extern.jackson.Jacksonized;
 import niffler.data.enums.CurrencyValues;
 
@@ -32,4 +29,19 @@ public class SpendJson {
     private String description;
     @JsonProperty("username")
     private String username;
+    @JsonProperty("spendDetails")
+    private SpendDetailsJson spendDetails;
+
+    public static class SpendDetailsJson {
+        private String id;
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+    }
+
 }

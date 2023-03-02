@@ -6,6 +6,7 @@ import io.qameta.allure.Step;
 import niffler.data.json.SpendJson;
 
 import static com.codeborne.selenide.Selenide.$;
+import static niffler.condition.SpendCondition.spends;
 
 public class SpendingTable extends BaseComponent<SpendingTable> {
 

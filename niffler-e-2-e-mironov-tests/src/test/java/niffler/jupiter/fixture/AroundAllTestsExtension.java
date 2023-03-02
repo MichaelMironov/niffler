@@ -1,5 +1,6 @@
 package niffler.jupiter.fixture;
 
+import com.codeborne.selenide.Configuration;
 import niffler.database.repostiory.SpendsRepository;
 import niffler.tests.ui.steps.CheckSteps;
 import org.junit.jupiter.api.extension.BeforeAllCallback;
@@ -8,6 +9,7 @@ import org.junit.jupiter.api.extension.ExtensionContext;
 public interface AroundAllTestsExtension extends BeforeAllCallback {
 
     default void beforeAllTests(ExtensionContext context) {
+        Configuration.browserSize = "1920x1080";
     }
 
     default void afterAllTests() {
