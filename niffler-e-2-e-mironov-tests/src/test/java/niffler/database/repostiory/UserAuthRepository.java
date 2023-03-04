@@ -12,7 +12,9 @@ import java.util.Set;
 import static niffler.database.entity.auth.Authority.read;
 import static niffler.database.entity.auth.Authority.write;
 
-public class UserAuthRepository extends PostgresHibernateUsersDAO {
+public class UserAuthRepository {
+
+    PostgresHibernateUsersDAO hibernateUsersDAO = new PostgresHibernateUsersDAO();
 
     private final PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 
@@ -20,7 +22,7 @@ public class UserAuthRepository extends PostgresHibernateUsersDAO {
         Allure.step("Create user: " + user);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setAuthorities(Set.of(AuthorityEntity.builder().authority(read).user(user).build()));
-        addUser(user);
+        hibernateUsersDAO.addUser(user);
     }
 
     public void createUserWithReadAndWriteAuthority(UserEntity user) {
@@ -29,6 +31,10 @@ public class UserAuthRepository extends PostgresHibernateUsersDAO {
         user.setAuthorities(Set.of(
                 AuthorityEntity.builder().authority(read).user(user).build(),
                 AuthorityEntity.builder().authority(write).user(user).build()));
-        addUser(user);
+        hibernateUsersDAO.addUser(user);
+    }
+
+    public UserEntity getByUsername(String username){
+       return hibernateUsersDAO.getByUsername(username);
     }
 }
