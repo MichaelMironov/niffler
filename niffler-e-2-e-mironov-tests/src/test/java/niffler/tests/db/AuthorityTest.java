@@ -7,6 +7,7 @@ import niffler.database.entity.auth.UserEntity;
 import niffler.database.repostiory.UserAuthRepository;
 import niffler.jupiter.di.auth.AuthUser;
 import niffler.jupiter.di.auth.AuthoriseExtension;
+import niffler.tests.ui.BaseTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.parallel.Execution;
@@ -21,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Execution(ExecutionMode.SAME_THREAD)
 @ExtendWith(AuthoriseExtension.class)
-class AuthorityTest {
+class AuthorityTest extends BaseTest {
 
     @AllureId("5")
     @Test

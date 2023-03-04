@@ -8,6 +8,7 @@ import niffler.jupiter.di.dao.DAO;
 import niffler.jupiter.di.dao.DAOResolver;
 import niffler.jupiter.di.profile.EntityGenerator;
 import niffler.jupiter.di.profile.Profile;
+import niffler.tests.ui.BaseTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -17,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith({DAOResolver.class, EntityGenerator.class})
-public class BatchTests {
+public class BatchTests extends BaseTest {
 
     @DAO(SPRING)
     PostgresSpringJdbcUsersDAO springJdbcUsersDAO;

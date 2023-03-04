@@ -7,6 +7,7 @@ import niffler.jupiter.di.dao.DAO;
 import niffler.jupiter.di.dao.DAOResolver;
 import niffler.jupiter.di.profile.EntityGenerator;
 import niffler.jupiter.di.profile.Profile;
+import niffler.tests.ui.BaseTest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,7 +16,7 @@ import static java.util.List.of;
 import static niffler.jupiter.di.dao.DAOType.JDBC;
 
 @ExtendWith({DAOResolver.class, EntityGenerator.class})
-public class UserdataTest {
+public class UserdataTest extends BaseTest {
 
     @DAO(JDBC)
     PostgresJdbcUsersDAO usersDataRepository;
