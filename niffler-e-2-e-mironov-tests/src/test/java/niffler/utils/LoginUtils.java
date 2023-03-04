@@ -17,7 +17,7 @@ public class LoginUtils {
         return Base64.getUrlEncoder().withoutPadding().encodeToString(codeVerifier);
     }
 
-    public static String generateCodeChallange(String codeVerifier) {
+    public static String generateCodeChallenge(String codeVerifier) {
         byte[] bytes = null;
         MessageDigest messageDigest = null;
         try {

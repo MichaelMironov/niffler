@@ -27,7 +27,7 @@ public class SessionStorageHolder {
     public void init() {
         final String codeVerifier = LoginUtils.generateCodeVerifier();
         sessionStorage.put(CODE_VERIFIER_KEY, codeVerifier);
-        sessionStorage.put(CODE_CHALLENGE_KEY, LoginUtils.generateCodeChallange(codeVerifier));
+        sessionStorage.put(CODE_CHALLENGE_KEY, LoginUtils.generateCodeChallenge(codeVerifier));
     }
 
     public void addCode(String code) {
