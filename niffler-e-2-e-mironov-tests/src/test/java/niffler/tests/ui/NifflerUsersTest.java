@@ -19,13 +19,13 @@ class NifflerUsersTest extends BaseTest {
 
     @AllureId("1")
     @Test
-    void test_1(@User(COMMON) UserModel userModel) {
-        System.out.println("Test_1. " + userModel);
+    void test_1(@User(COMMON) UserModel first, @User(COMMON) UserModel second) {
+        System.out.println("Test_1. " + first);
         step("Check login", () -> {
             open(PROPS.authUrl());
             $("a[href*='redirect']").click();
-            $("input[name='username']").setValue(userModel.getUsername());
-            $("input[name='password']").setValue(userModel.getPassword());
+            $("input[name='username']").setValue(first.getUsername());
+            $("input[name='password']").setValue(first.getPassword());
             $("button[type='submit']").click();
             $(".header__title").shouldBe(Condition.visible)
                     .shouldHave(Condition.text("Niffler. The coin keeper."));
@@ -49,13 +49,13 @@ class NifflerUsersTest extends BaseTest {
 
     @AllureId("3")
     @Test
-    void test_3(@User(COMMON) UserModel userModel) {
-        System.out.println("Test_3. " + userModel);
+    void test_3(@User(ADMIN) UserModel first, @User(ADMIN) UserModel second) {
+        System.out.println("Test_3. " + first);
         step("Check login", () -> {
             open(PROPS.authUrl());
             $("a[href*='redirect']").click();
-            $("input[name='username']").setValue("test");
-            $("input[name='password']").setValue("12345");
+            $("input[name='username']").setValue(first.getUsername());
+            $("input[name='password']").setValue(first.getPassword());
             $("button[type='submit']").click();
             $(".header__title").shouldBe(Condition.visible)
                     .shouldHave(Condition.text("Niffler. The coin keeper."));
@@ -69,8 +69,8 @@ class NifflerUsersTest extends BaseTest {
         step("Check login", () -> {
             open(PROPS.authUrl());
             $("a[href*='redirect']").click();
-            $("input[name='username']").setValue("test");
-            $("input[name='password']").setValue("12345");
+            $("input[name='username']").setValue(userModel.getUsername());
+            $("input[name='password']").setValue(userModel.getPassword());
             $("button[type='submit']").click();
             $(".header__title").shouldBe(Condition.visible)
                     .shouldHave(Condition.text("Niffler. The coin keeper."));
