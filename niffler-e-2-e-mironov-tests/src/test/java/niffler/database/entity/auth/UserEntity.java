@@ -43,6 +43,7 @@ public class UserEntity implements BaseEntity<UUID> {
     @Column(name = "credentials_non_expired", nullable = false)
     private Boolean credentialsNonExpired;
 
+    @Builder.Default
     @OneToMany(fetch = LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "user")
     private Set<AuthorityEntity> authorities = new HashSet<>();
 }
