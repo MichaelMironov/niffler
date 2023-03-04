@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import niffler.api.context.CookieHolder;
 import niffler.api.context.SessionStorageHolder;
 import niffler.api.interceptops.AddCookiesReqInterceptor;
+import niffler.api.interceptops.AllureInterceptor;
 import niffler.api.interceptops.ExtractCodeFromRespInterceptor;
 import niffler.api.interceptops.ReceivedCookieRespInterceptor;
 import niffler.config.Config;
@@ -24,6 +25,7 @@ public class NifflerAuthClient {
             .addNetworkInterceptor(new ReceivedCookieRespInterceptor())
             .addNetworkInterceptor(new AddCookiesReqInterceptor())
             .addNetworkInterceptor(new ExtractCodeFromRespInterceptor())
+            .addNetworkInterceptor(new AllureInterceptor())
             .build();
 
     private final Retrofit retrofit = new Retrofit.Builder()
