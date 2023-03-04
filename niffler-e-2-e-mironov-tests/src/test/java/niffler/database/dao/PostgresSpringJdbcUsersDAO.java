@@ -1,5 +1,6 @@
 package niffler.database.dao;
 
+import io.qameta.allure.Allure;
 import lombok.NonNull;
 import niffler.database.DataBase;
 import niffler.database.entity.userdata.ProfileEntity;
@@ -68,6 +69,7 @@ public class PostgresSpringJdbcUsersDAO implements UsersDAO {
             @Override
             public void setValues(@NonNull PreparedStatement preparedStatement, int i) throws SQLException {
                 ProfileEntity user = temp.get(i);
+                Allure.step("Add user: " + user);
                 preparedStatement.setString(1, user.getUsername());
                 preparedStatement.setString(2, user.getCurrency());
                 preparedStatement.setString(3, user.getFirstname());
