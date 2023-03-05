@@ -1,5 +1,5 @@
 mike/mir
-INSERT INTO categories (category) values ('Бары'), ('Рестораны'), ('Продукты'), ('Обучение в QA.GURU')
+INSERT INTO categories (category, username) values ('Бары', 'mike'), ('Рестораны','mike'), ('Продукты','mike'), ('Обучение в QA.GURU','mike')
 
 1. **BeforeAllCallback**: `RequiredTestClass`
 2. **BeforeEachCallback**: `RequiredTestClass, RequiredTestInstance, RequiredTestMethod`
