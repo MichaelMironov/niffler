@@ -1,15 +1,15 @@
 package niffler.jupiter.auth;
 
 import io.qameta.allure.AllureId;
-
 import niffler.api.auth.NifflerAuthClient;
 import niffler.api.spend.SpendClient;
 import niffler.api.user.UserClient;
 import niffler.config.Config;
 import niffler.data.json.CategoryJson;
+import niffler.data.json.SpendJson;
 import niffler.data.json.UserJson;
-
 import niffler.jupiter.di.user.User;
+import niffler.utils.DateUtils;
 import org.junit.jupiter.api.extension.*;
 import retrofit2.Response;
 
@@ -42,6 +42,7 @@ public class CreateUserExtension implements BeforeEachCallback, ParameterResolve
             if ("".equals(password)) {
                 password = generateRandomPassword();
             }
+
             UserJson userJson = apiRegister(username, password);
             GenerateCategory[] categories = entry.getValue().categories();
             List<CategoryJson> createdCategories = new ArrayList<>();
@@ -53,7 +54,26 @@ public class CreateUserExtension implements BeforeEachCallback, ParameterResolve
                     createdCategories.add(spendClient.createCategory(cj));
                 }
             }
+            GenerateSpend[] spends = entry.getValue().spends();
+            List<SpendJson> createdSpends = new ArrayList<>();
+            if (spends != null && spends.length > 0) {
+                for (GenerateSpend spend : spends) {
+                    SpendJson spendJson = new SpendJson();
+                    spendJson.setUsername(username);
+                    spendJson.setAmount(spend.amount());
+                    spendJson.setCategory(spend.category());
+                    spendJson.setCurrency(spend.currency());
+                    spendJson.setSpendDate(spend.date().equals("")
+                            ? new Date()
+                            : DateUtils.fromString(spend.date()));
+                    spendJson.setDescription(spend.description());
+                    createdSpends.add(spendClient.createSpend(spendJson));
+                }
+            }
             userJson.setCategoryJsons(createdCategories);
+            userJson.setSpendJsons(createdSpends);
+
+            System.out.println(createdSpends);
             context.getStore(entry.getKey().getNamespace()).put(testId, userJson);
         }
     }
