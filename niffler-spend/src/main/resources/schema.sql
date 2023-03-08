@@ -21,7 +21,7 @@ create table if not exists spends
     spend_date  date         not null,
     currency    varchar(50)  not null,
     amount      float        not null,
-    category varchar(255) not null,
+    description varchar(255) not null,
     category_id UUID         not null,
     constraint fk_spends_categories foreign key (category_id) references categories (id)
 );
