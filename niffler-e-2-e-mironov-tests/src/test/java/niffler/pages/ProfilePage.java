@@ -18,6 +18,7 @@ public class ProfilePage extends BasePage<ProfilePage> {
     private final SelenideElement currencySelect = $("div .select-wrapper");
     private final SelenideElement submitButton = $(byText("Submit"));
     private final SelenideElement createCategoryButton = $(byText("Create"));
+    private final SelenideElement editPhotoButton = $(".profile__avatar-edit");
 
     @Step("Fill profile page with rate: name: {0}, surname: {1}, currency: {2}")
     public ProfilePage fillProfile(String name, String surname, CurrencyValues currency) {
@@ -65,11 +66,25 @@ public class ProfilePage extends BasePage<ProfilePage> {
         return this;
     }
 
+    @Step("Set profile photo - {0}")
+    public ProfilePage setPhoto(String photoSrc) {
+        editPhotoButton.click();
+        $(".edit-avatar__input").uploadFromClasspath(photoSrc);
+        return this;
+    }
+
     @Step("Save profile")
     public ProfilePage submitProfile() {
         submitButton.click();
         return this;
     }
+
+    @Step("Go to main page")
+    public MainPage toMainPage() {
+        $("a[href='/main']").click();
+        return new MainPage();
+    }
+
 
     @Step("Check that page is loaded")
     @Override
