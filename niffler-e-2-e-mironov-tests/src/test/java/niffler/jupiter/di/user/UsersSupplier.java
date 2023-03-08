@@ -1,8 +1,9 @@
 package niffler.jupiter.di.user;
 
 import io.qameta.allure.AllureId;
-import niffler.jupiter.di.user.User.UserType;
+import lombok.SneakyThrows;
 import niffler.data.model.UserModel;
+import niffler.jupiter.di.user.User.UserType;
 import org.junit.jupiter.api.extension.*;
 
 import java.util.*;
@@ -67,6 +68,7 @@ public class UsersSupplier implements ParameterResolver, BeforeTestExecutionCall
                 && parameterContext.getParameter().isAnnotationPresent(User.class);
     }
 
+    @SneakyThrows
     @Override
     public UserModel resolveParameter(final ParameterContext parameterContext, final ExtensionContext context) throws ParameterResolutionException {
         return getUsersStorage(context).entrySet().stream()

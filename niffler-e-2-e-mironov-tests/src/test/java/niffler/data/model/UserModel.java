@@ -4,8 +4,12 @@ import java.util.Objects;
 
 public class UserModel {
 
-    private String username;
-    private String password;
+    public String username;
+    public String password;
+
+    public UserModel(){
+        
+    }
 
     public UserModel(String username, String password) {
         this.username = username;
