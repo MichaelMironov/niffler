@@ -25,9 +25,9 @@ public class SpendCondition {
                     elementNotFound.timeoutMs = timeoutMs;
                     throw elementNotFound;
                 } else if (elements.size() != expectedSpends.length) {
-                    throw new SpendsSizeMismatch(collection, Arrays.asList(expectedSpends), bindElementsToSpends(elements), explanation, timeoutMs);
+                    throw new SpendsSizeMismatch(collection, Arrays.asList(expectedSpends), mapToReportView(elements), explanation, timeoutMs);
                 } else {
-                    throw new SpendsMismatch(collection, Arrays.asList(expectedSpends), bindElementsToSpends(elements), explanation, timeoutMs);
+                    throw new SpendsMismatch(collection, Arrays.asList(expectedSpends), mapToReportView(elements), explanation, timeoutMs);
                 }
             }
 
@@ -64,7 +64,7 @@ public class SpendCondition {
                 return true;
             }
 
-            private List<SpendJson> bindElementsToSpends(List<WebElement> elements) {
+            private List<SpendJson> mapToReportView(List<WebElement> elements) {
                 return elements.stream()
                         .map(e -> {
                             List<WebElement> cells = e.findElements(By.cssSelector("td"));
