@@ -1,6 +1,7 @@
 package niffler.data.json;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import niffler.data.enums.CurrencyValues;
 
@@ -9,7 +10,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
+//@JsonIgnoreProperties(ignoreUnknown = true)
 public class UserJson {
     @JsonProperty("id")
     private UUID id;
@@ -25,9 +26,23 @@ public class UserJson {
     private String photo;
     @JsonProperty("password")
     private String password;
+    @JsonProperty("friendState")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private FriendState friendState;
 
     private transient List<CategoryJson> categoryJsons;
     private transient List<SpendJson> spendJsons;
+
+    public FriendState getFriendState() {
+        return friendState;
+    }
+
+    public UserJson() {
+    }
+
+    public void setFriendState(FriendState friendState) {
+        this.friendState = friendState;
+    }
 
     public UUID getId() {
         return id;
@@ -112,5 +127,21 @@ public class UserJson {
     @Override
     public int hashCode() {
         return Objects.hash(id, userName, firstname, surname, currency, photo, password);
+    }
+
+    @Override
+    public String toString() {
+        return "UserJson{" +
+                "id=" + id +
+                ", userName='" + userName + '\'' +
+                ", firstname='" + firstname + '\'' +
+                ", surname='" + surname + '\'' +
+                ", currency=" + currency +
+                ", photo='" + photo + '\'' +
+                ", password='" + password + '\'' +
+                ", friendState=" + friendState +
+                ", categoryJsons=" + categoryJsons +
+                ", spendJsons=" + spendJsons +
+                '}';
     }
 }
