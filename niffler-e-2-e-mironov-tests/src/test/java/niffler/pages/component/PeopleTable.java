@@ -1,4 +1,4 @@
-package niffler.page.component;
+package niffler.pages.component;
 
 import com.codeborne.selenide.SelenideElement;
 

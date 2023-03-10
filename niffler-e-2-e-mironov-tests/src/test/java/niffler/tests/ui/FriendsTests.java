@@ -17,6 +17,6 @@ class FriendsTests extends BaseTest {
     @Test
     @ApiLogin(nifflerUser = @GenerateUser(username = "aa1", password = "12345"))
     void addFriend(@User(selector = NESTED) UserJson user, FriendJson friendJson){
-        Selenide.open()
+//        Selenide.open()
     }
 }
