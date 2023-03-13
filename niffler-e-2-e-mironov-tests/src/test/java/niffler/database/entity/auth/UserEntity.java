@@ -3,20 +3,22 @@ package niffler.database.entity.auth;
 import jakarta.persistence.*;
 import lombok.*;
 import niffler.database.entity.BaseEntity;
+import org.hibernate.Hibernate;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
-import static jakarta.persistence.FetchType.EAGER;
 import static jakarta.persistence.FetchType.LAZY;
 
 @Entity
-@Data
+@Getter
+@Setter
+@RequiredArgsConstructor
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(exclude = "authorities")
 @ToString(exclude = "authorities")
 @Table(name = "users", schema = "public", catalog = "niffler-auth")
 public class UserEntity implements BaseEntity<UUID> {
@@ -45,5 +47,19 @@ public class UserEntity implements BaseEntity<UUID> {
 
     @Builder.Default
     @OneToMany(fetch = LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "user")
+    @ToString.Exclude
     private Set<AuthorityEntity> authorities = new HashSet<>();
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        UserEntity user = (UserEntity) o;
+        return id != null && Objects.equals(id, user.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }
