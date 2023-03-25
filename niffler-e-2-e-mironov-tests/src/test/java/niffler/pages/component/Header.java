@@ -2,6 +2,7 @@ package niffler.pages.component;
 
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
+import niffler.pages.PeoplePage;
 
 import static com.codeborne.selenide.Selenide.$;
 import static niffler.condition.PhotoCondition.photo;
@@ -18,5 +19,10 @@ public class Header extends BaseComponent<Header> {
     public Header checkProfilePhoto(String expectedPhoto){
         avatar.shouldHave(photo(expectedPhoto));
         return this;
+    }
+
+    public PeoplePage toPeople(){
+        $("a[href*='/people']").click();
+        return new PeoplePage();
     }
 }

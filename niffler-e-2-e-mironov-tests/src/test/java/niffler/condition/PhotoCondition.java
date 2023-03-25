@@ -8,6 +8,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.WebElement;
 
 import javax.annotation.Nonnull;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Base64;
@@ -20,7 +21,6 @@ public class PhotoCondition {
 
     public static Condition photo(String expectedPhoto) {
         return new Condition("photo") {
-            @SneakyThrows
             @Nonnull
             @Override
             public CheckResult check(Driver driver, WebElement element) {
@@ -28,8 +28,13 @@ public class PhotoCondition {
                 final ClassLoader cl = PhotoCondition.class.getClassLoader();
 
                 try (InputStream is = cl.getResourceAsStream(expectedPhoto)) {
-                    final byte[] expectedPhoto = Base64.getEncoder()
-                            .encode(requireNonNull(is, "Img not found in classpath").readAllBytes());
+                    final byte[] expectedPhoto;
+                    try {
+                        expectedPhoto = Base64.getEncoder()
+                                .encode(requireNonNull(is, "Img not found in classpath").readAllBytes());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
 
                     final String src = element.getAttribute("src");
                     final byte[] actualPhoto = StringUtils.substringAfter(src, "base64,").getBytes();
@@ -37,6 +42,8 @@ public class PhotoCondition {
                     final boolean photosIsEqual = Arrays.equals(expectedPhoto, actualPhoto);
 
                     return new CheckResult(photosIsEqual ? ACCEPT : REJECT, null);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
                 }
             }
         };

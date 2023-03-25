@@ -15,6 +15,8 @@ public @interface User {
 
     CreateUserExtension.Selector selector() default CreateUserExtension.Selector.NESTED;
 
+    boolean friend() default false;
+
     enum UserType {
         ADMIN, COMMON
     }

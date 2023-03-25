@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith({DAOResolver.class, EntityGenerator.class})
-public class BatchTests extends BaseTest {
+public class ProfileTest extends BaseTest {
 
     @DAO(SPRING)
     PostgresSpringJdbcUsersDAO springJdbcUsersDAO;

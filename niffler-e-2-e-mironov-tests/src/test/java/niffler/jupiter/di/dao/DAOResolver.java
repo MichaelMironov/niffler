@@ -18,11 +18,17 @@ public class DAOResolver implements TestInstancePostProcessor {
         Arrays.stream(testInstance.getClass().getDeclaredFields())
                 .filter(field -> field.isAnnotationPresent(DAO.class))
                 .peek(field -> field.setAccessible(true))
-                .forEach(field -> setImplementation(testInstance, field));
+                .forEach(field -> {
+                    try {
+                        setImplementation(testInstance, field);
+                    } catch (IllegalAccessException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
     }
 
-    @SneakyThrows
-    private void setImplementation(Object testInstance, Field field) {
+
+    private void setImplementation(Object testInstance, Field field) throws IllegalAccessException {
 
         switch (field.getAnnotation(DAO.class).value()) {
             case SPRING -> field.set(testInstance, new PostgresSpringJdbcUsersDAO());

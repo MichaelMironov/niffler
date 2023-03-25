@@ -1,4 +1,4 @@
-package niffler.jupiter;
+package niffler.jupiter.fixture;
 
 import jakarta.persistence.EntityManagerFactory;
 import niffler.database.jpa.EmfContext;

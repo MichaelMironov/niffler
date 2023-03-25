@@ -31,8 +31,8 @@ public class FriendsClient extends RestService {
         return friendsApi.invitations(username).execute().body();
     }
 
-    public List<UserJson> acceptInvitation(String username, FriendJson invitation) {
-        return null;
+    public void acceptInvitation(String username, FriendJson invitation) throws IOException {
+        friendsApi.acceptInvitation(username, invitation).execute();
     }
 
     public List<UserJson> declineInvitation(String username, FriendJson invitation) {

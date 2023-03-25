@@ -1,18 +1,22 @@
 package niffler.tests.ui;
 
-import com.codeborne.selenide.Condition;
+import io.qameta.allure.AllureId;
+import niffler.data.enums.CurrencyValues;
+import niffler.data.json.UserJson;
 import niffler.database.dao.UsersDAO;
 import niffler.database.entity.userdata.ProfileEntity;
+import niffler.jupiter.auth.ApiLogin;
 import niffler.jupiter.di.dao.DAO;
 import niffler.jupiter.di.dao.DAOResolver;
+import niffler.jupiter.di.user.User;
+import niffler.pages.ProfilePage;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
-import static io.qameta.allure.Allure.step;
+import static niffler.jupiter.auth.CreateUserExtension.Selector.NESTED;
 import static niffler.jupiter.di.dao.DAOType.SPRING;
 
 @ExtendWith(DAOResolver.class)
@@ -31,17 +35,12 @@ class UserdataCurrencyTest {
         usersDAO.updateUser(user);
     }
 
+    @AllureId("18")
     @Test
-    void loginTest() {
-        step("Check login", () -> {
-            open("http://127.0.0.1:3000/");
-            $("a[href*='redirect']").click();
-            $("input[name='username']").setValue("mike");
-            $("input[name='password']").setValue("mir");
-            $("button[type='submit']").click();
-            $(".header__title").shouldBe(Condition.visible)
-                    .shouldHave(Condition.text("Niffler. The coin keeper."));
-        });
+    @ApiLogin(username = "mike", password = "mir")
+    void checkUpdatedCurrency() {
+        open(ProfilePage.URL, ProfilePage.class)
+                .checkCurrency(CurrencyValues.KZT);
     }
 
     @AfterEach

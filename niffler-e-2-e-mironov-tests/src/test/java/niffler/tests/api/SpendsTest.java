@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ExtendWith(ClientSupplier.class)
-public class ApiTests {
+public class SpendsTest {
 
     SpendClient spendClient = new SpendClient();
     UserClient userClient = new UserClient();

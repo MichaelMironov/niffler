@@ -1,6 +1,10 @@
 package niffler.pages.component;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+
+import static com.codeborne.selenide.Condition.*;
 
 public abstract class BaseComponent<T extends BaseComponent> {
 

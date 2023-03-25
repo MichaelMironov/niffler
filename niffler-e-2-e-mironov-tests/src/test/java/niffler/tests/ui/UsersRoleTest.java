@@ -15,7 +15,7 @@ import static niffler.jupiter.di.user.User.UserType.ADMIN;
 import static niffler.jupiter.di.user.User.UserType.COMMON;
 
 @ExtendWith(UsersSupplier.class)
-class NifflerUsersTest extends BaseTest {
+class UsersRoleTest extends BaseTest {
 
     @AllureId("1")
     @Test

@@ -2,6 +2,7 @@ package niffler.jupiter.auth;
 
 import io.qameta.allure.AllureId;
 import niffler.api.auth.NifflerAuthClient;
+import niffler.api.friend.FriendsClient;
 import niffler.api.spend.SpendClient;
 import niffler.api.user.UserClient;
 import niffler.config.Config;
@@ -13,8 +14,10 @@ import niffler.utils.DateUtils;
 import org.junit.jupiter.api.extension.*;
 import retrofit2.Response;
 
+import java.lang.reflect.Parameter;
 import java.util.*;
 
+import static niffler.jupiter.auth.ApiAuthExtension.AUTH_EXTENSION_NAMESPACE;
 import static niffler.utils.DataUtils.generateRandomPassword;
 import static niffler.utils.DataUtils.generateRandomUsername;
 
@@ -22,6 +25,8 @@ public class CreateUserExtension implements BeforeEachCallback, ParameterResolve
 
     private final NifflerAuthClient authClient = new NifflerAuthClient();
     private final UserClient userdataClient = new UserClient();
+    FriendsClient friendsClient = new FriendsClient();
+
     private final SpendClient spendClient = new SpendClient();
     protected static final Config CFG = Config.getConfig();
 
@@ -73,7 +78,6 @@ public class CreateUserExtension implements BeforeEachCallback, ParameterResolve
             userJson.setCategoryJsons(createdCategories);
             userJson.setSpendJsons(createdSpends);
 
-            System.out.println(createdSpends);
             context.getStore(entry.getKey().getNamespace()).put(testId, userJson);
         }
     }

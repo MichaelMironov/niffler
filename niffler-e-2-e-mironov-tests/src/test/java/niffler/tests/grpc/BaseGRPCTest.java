@@ -15,7 +15,6 @@ public abstract class BaseGRPCTest {
         Metadata metadata = new Metadata();
         metadata.put(Metadata.Key.of("Authorization", Metadata.ASCII_STRING_MARSHALLER), "token");
 
-
         channel = ManagedChannelBuilder
                 .forAddress("127.0.0.1", 8092)
                 .intercept(new AllureGrpc())

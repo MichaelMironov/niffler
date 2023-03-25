@@ -43,6 +43,7 @@ public class ApiAuthExtension implements BeforeEachCallback, AfterTestExecutionC
             userToLogin = new UserJson();
             userToLogin.setUserName(apiLoginAnnotation.username());
             userToLogin.setPassword(apiLoginAnnotation.password());
+            context.getStore(AUTH_EXTENSION_NAMESPACE).put(getTestId(context), userToLogin);
         }
         apiLogin(userToLogin.getUserName(), userToLogin.getPassword());
         Selenide.open(CFG.frontUrl());

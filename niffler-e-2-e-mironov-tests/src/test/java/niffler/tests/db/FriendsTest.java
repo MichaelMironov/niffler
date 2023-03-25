@@ -16,7 +16,7 @@ import static java.util.List.of;
 import static niffler.jupiter.di.dao.DAOType.JDBC;
 
 @ExtendWith({DAOResolver.class, EntityGenerator.class})
-public class UserdataTest extends BaseTest {
+public class FriendsTest extends BaseTest {
 
     @DAO(JDBC)
     PostgresJdbcUsersDAO usersDataRepository;

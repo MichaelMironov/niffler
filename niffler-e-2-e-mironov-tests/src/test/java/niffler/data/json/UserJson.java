@@ -1,11 +1,11 @@
 package niffler.data.json;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.codeborne.selenide.ElementsCollection;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import niffler.data.enums.CurrencyValues;
+import org.apache.commons.lang3.StringUtils;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -32,6 +32,16 @@ public class UserJson {
 
     private transient List<CategoryJson> categoryJsons;
     private transient List<SpendJson> spendJsons;
+
+    public static UserJson fromTable(ElementsCollection element) {
+        UserJson usr = new UserJson();
+        usr.setPhoto(StringUtils.substringAfter(element.get(0).getAttribute("src"), "base64,"));
+        usr.setUserName(element.get(1).getText());
+        usr.setFirstname(element.get(2).getText());
+        usr.setSurname(element.get(3).getText());
+        return usr;
+    }
+
 
     public FriendState getFriendState() {
         return friendState;
@@ -132,16 +142,16 @@ public class UserJson {
     @Override
     public String toString() {
         return "UserJson{" +
-                "id=" + id +
-                ", userName='" + userName + '\'' +
-                ", firstname='" + firstname + '\'' +
-                ", surname='" + surname + '\'' +
-                ", currency=" + currency +
-                ", photo='" + photo + '\'' +
-                ", password='" + password + '\'' +
-                ", friendState=" + friendState +
-                ", categoryJsons=" + categoryJsons +
-                ", spendJsons=" + spendJsons +
-                '}';
+               "id=" + id +
+               ", userName='" + userName + '\'' +
+               ", firstname='" + firstname + '\'' +
+               ", surname='" + surname + '\'' +
+               ", currency=" + currency +
+               ", photo='" + photo + '\'' +
+               ", password='" + password + '\'' +
+               ", friendState=" + friendState +
+               ", categoryJsons=" + categoryJsons +
+               ", spendJsons=" + spendJsons +
+               '}';
     }
 }

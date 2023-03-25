@@ -13,7 +13,7 @@ class ProfileTest extends BaseTest {
     @Test
     @AllureId("10")
     @ApiLogin(nifflerUser = @GenerateUser)
-    void avatarMustMatchAfterSetInProfile() {
+    void photoMustMatchAfterSetInProfile() {
         Selenide.open(ProfilePage.URL, ProfilePage.class)
                 .waitForPageLoaded()
                 .setPhoto("data/img/profile_photo.png")

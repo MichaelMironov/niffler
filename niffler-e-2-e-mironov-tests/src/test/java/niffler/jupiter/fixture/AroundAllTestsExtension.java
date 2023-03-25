@@ -8,15 +8,23 @@ import niffler.database.repostiory.SpendsRepository;
 import niffler.tests.ui.steps.CheckSteps;
 import org.junit.jupiter.api.extension.BeforeAllCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.DesiredCapabilities;
 
 public interface AroundAllTestsExtension extends BeforeAllCallback {
 
     default void beforeAllTests(ExtensionContext context) {
-        Configuration.browserSize = "1920x1080";
+//        Configuration.browserSize = "1920x1080";
+        DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
+        ChromeOptions chromeOptions = new ChromeOptions();
+        chromeOptions.addArguments("--remote-allow-origins=*");
+        desiredCapabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
+        desiredCapabilities.setAcceptInsecureCerts(true);
 
-        SelenideLogger.addListener("AllureSelenide", new AllureSelenide()
-                .savePageSource(false)
-                .screenshots(true));
+        Configuration.browserCapabilities = desiredCapabilities;
+//        SelenideLogger.addListener("AllureSelenide", new AllureSelenide()
+//                .savePageSource(false)
+//                .screenshots(true));
     }
 
     default void afterAllTests() {

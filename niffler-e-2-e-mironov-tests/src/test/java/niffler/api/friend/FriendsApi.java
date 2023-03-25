@@ -18,7 +18,7 @@ public interface FriendsApi {
 
 
     @POST("/acceptInvitation")
-    public Call<UserJson> acceptInvitation(@Query("username") String username,
+    public Call<Void> acceptInvitation(@Query("username") String username,
                                            @Body FriendJson invitation);
 
     @POST("/declineInvitation")

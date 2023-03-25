@@ -59,4 +59,15 @@ class FriendsTest extends BaseTest {
         System.out.println(mike);
 
     }
+
+    @AllureId("17")
+    @Test
+    void testAcceptInvite() throws IOException {
+
+        FriendsClient friendsClient = new FriendsClient();
+        FriendJson friendJson = new FriendJson();
+        friendJson.setUsername("mike");
+        friendsClient.acceptInvitation("dima", friendJson);
+
+    }
 }
